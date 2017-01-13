@@ -1,0 +1,49 @@
+
+.jqplot-target{
+    display:inline-block;
+}
+
+#sub-menu{
+    float: right;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: black;
+    text:left;
+    padding: 5px 5px 5px 5px;
+    margin-right: 5px;
+}
+
+#loder_contain{
+    padding-left: 45%;
+}
+#status div{
+    margin-left: 35%;
+}
+#new_device_info{
+    margin-left: 15%;
+}
+
+
+#mainmenu{
+    
+}
+
+#mainmenu{
+    float:left;
+}
+#mainmenu ul{
+    background-color: #fff;
+}
+#mainmenu ul li a{
+    color: #000;
+}
+
+#wrapper{
+    margin-right: 10px;
+}
+#page-wrapper{
+    margin-right: 10px;
+    margin-bottom: 0px;
+    padding-bottom: 2px;
+    
+}

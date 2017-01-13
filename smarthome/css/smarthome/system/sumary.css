@@ -1,0 +1,10 @@
+#sensor_list{
+    display: block;
+    float:left;
+    margin-left: 20%;
+}
+#actuator_list{
+    display: block;
+    float:right;  
+    margin-right: 20%;
+}
