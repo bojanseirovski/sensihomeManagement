@@ -37,5 +37,5 @@ function	getSimpleRequest($requestString)	{
 				$output	=	curl_exec($ch);
 				curl_close($ch);
 				$decoded = json_decode($output,true);
-				return	$output;
+				return	$decoded;
 }

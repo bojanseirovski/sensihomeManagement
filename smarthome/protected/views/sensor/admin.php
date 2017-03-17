@@ -7,10 +7,10 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'Show all Sensors', 'url'=>array('sensor/list')),
-	array('label'=>'New Sensor', 'url'=>array('create')),
-);
+//$this->menu=array(
+//	array('label'=>'Show all Sensors', 'url'=>array('sensor/list')),
+//	array('label'=>'New Sensor', 'url'=>array('create')),
+//);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){

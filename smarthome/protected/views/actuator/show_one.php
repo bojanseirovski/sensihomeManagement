@@ -1,33 +1,54 @@
+<?php
+$devState = $lastVal=="0" ? 'OFF' : 'ON';
+?>
 <h2 id="this_page_title"></h2>
-<div id="sub-menu">
-    <?php
-    $this->widget('zii.widgets.CMenu', array(
-        'items' => array(
-                    array(
-                        'label' => 'Update', 'url' => array('/actuator/update/'.$id),
-                        'visible' => !Yii::app()->user->isGuest,
-                        'linkOptions' => array('class' => 'sub-submenu-item'),
-                        'itemOptions' => array('class' => 'submenu'),
-                    ),
-                    array(
-                        'label' => 'Manage all', 'url' => array('/actuator/list'),
-                        'visible' => !Yii::app()->user->isGuest,
-                        'linkOptions' => array('class' => 'sub-submenu-item'),
-                        'itemOptions' => array('class' => 'submenu'),
-                    ),
-                    array(
-                        'label' => 'New', 'url' => array('/actuator/create'),
-                        'visible' => !Yii::app()->user->isGuest,
-                        'linkOptions' => array('class' => 'sub-submenu-item'),
-                        'itemOptions' => array('class' => 'submenu'),
-                    ),
-        ),
-    ));
-    ?>
+<div class="menu-container">
+    <ul class="menu_right_float">
+	<li class="menu item">
+	    <a class="menu item link" href="<?= $this->createAbsoluteUrl('/actuator/update/' . $id); ?>">
+		<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+	    </a>
+	</li>
+	<li class="menu item">
+	    <a class="menu item link" href="<?= $this->createAbsoluteUrl('/actuator/list'); ?>">
+		<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Manage all
+	    </a>
+	</li>
+	<li class="menu item">
+	    <a class="menu item link" href="<?= $this->createAbsoluteUrl('actuator/create'); ?>">
+		<i class="fa fa-file-o" aria-hidden="true"></i> New
+	    </a>
+	</li>
+	<li class="menu item">
+	    <a href="http://<?= $data->com_id; ?>/id/<?= $data->serial; ?>">
+		<i class="fa fa-hand-o-right" aria-hidden="true"></i> Go to device
+	    </a>
+	</li>
+    </ul>
+    <div class="device_info">
+	<div>
+	    <h4>
+		Toggle state: 
+		<a href="javascript:void(0);" 
+		   data-url="http://<?= $data->com_id; ?>/id/<?= $data->serial; ?>/pin/<?= $devState; ?>/reqtype/json" 
+		   data-lurl="<?= $this->createAbsoluteUrl('actuator/toggle'); ?>" 
+		   id="changeActState" 
+		   data-id="<?= $data->aid; ?>">
+		       <?= $devState; ?>
+		</a>
+	    </h4>
+	</div>
+	<div><strong>Name : </strong><?= CHtml::encode($data->name); ?></div>
+	<div><strong>IP address : </strong><?= CHtml::encode($data->com_id); ?></div>
+	<div><strong>Added on : </strong><?= date('d M Y', strtotime($data->date_created)); ?></div>
+	<div><strong>Type: </strong><?= CHtml::encode(ActuatorType::model()->findByPk($data->type)->type_name) ?></div>
+	<div><strong>Default state: </strong><?= $data->state; ?></div>
+    </div>
 </div>
 <script type="text/javascript" src="<?= Yii::app()->request->baseUrl; ?>/js/jqplot/jquery.min.js"></script>
 <script type="text/javascript" src="<?= Yii::app()->request->baseUrl; ?>/js/jqplot/jquery.jqplot.min.js"></script>
-<script type="text/html" id="load_actuator_data_url"><?=$this->createAbsoluteUrl('actuator/actuator'); ?>?id=<?=$id;?>&ajax=1</script>
+<script type="text/html" id="load_actuator_data_url"><?= $this->createAbsoluteUrl('actuator/actuator'); ?>?id=<?= CHtml::encode($id); ?>&ajax=1</script>
+<script type="text/html" id="dev_name"><?= CHtml::encode($data->name); ?></script>
 
 
 

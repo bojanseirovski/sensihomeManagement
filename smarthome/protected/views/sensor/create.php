@@ -7,10 +7,10 @@ $this->breadcrumbs=array(
 	'Create',
 );
 
-$this->menu=array(
-	array('label'=>'List Sensor', 'url'=>array('index')),
-	array('label'=>'Manage Sensor', 'url'=>array('admin')),
-);
+//$this->menu=array(
+//	array('label'=>'List Sensor', 'url'=>array('index')),
+//	array('label'=>'Manage Sensor', 'url'=>array('admin')),
+//);
 ?>
 
 <h1>Create Sensor</h1>

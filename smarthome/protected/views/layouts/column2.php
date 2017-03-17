@@ -22,17 +22,7 @@
 </div>
 <div class="span-5 last">
 				<div id="sidebar">
-								<?php
-								$this->beginWidget('zii.widgets.CPortlet',	array(
-												'title'	=>	'',
-								));
-								$this->widget('zii.widgets.CMenu',	array(
-												'encodeLabel'	=>	false,
-												'items'	=>	$this->menu,
-												'htmlOptions'	=>	array('class'	=>	'operations'),
-								));
-								$this->endWidget();
-								?>
+								<br/>
 				</div><!-- sidebar -->
 </div>
 <?php	$this->endContent();	?>

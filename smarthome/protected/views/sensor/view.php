@@ -8,11 +8,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-//	array('label'=>'Home', 'url'=>array('index')),
-	array('label'=>'New Sensor', 'url'=>array('create')),
-	array('label'=>'Update this Sensor', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage All', 'url'=>array('admin')),
+	array('label'=>'<i class="fa fa-plus-square-o" aria-hidden="true"></i> New', 'url'=>array('create')),
+	array('label'=>'<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update', 'url'=>array('update', 'id'=>$model->id)),
+	array('label'=>'<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'<i class="fa fa-list" aria-hidden="true"></i>Manage', 'url'=>array('list')),
 );
 ?>
 

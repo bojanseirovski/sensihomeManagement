@@ -61,9 +61,7 @@ class UserIdentity extends CUserIdentity {
         return $userCreated;
     }
     
-    
     private function encrypt($plainString){
         return   md5(sha1($plainString.$plainString));
     }
-
 }

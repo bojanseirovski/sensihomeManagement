@@ -7,10 +7,10 @@ $this->breadcrumbs=array(
 	'Create',
 );
 
-$this->menu=array(
-	array('label'=>'List Actuator', 'url'=>array('index')),
-	array('label'=>'Manage Actuator', 'url'=>array('admin')),
-);
+//$this->menu=array(
+//	array('label'=>'List Actuator', 'url'=>array('index')),
+//	array('label'=>'Manage Actuator', 'url'=>array('admin')),
+//);
 ?>
 
 <h1>Create Actuator</h1>

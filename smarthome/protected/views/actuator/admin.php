@@ -6,11 +6,11 @@ $this->breadcrumbs=array(
 	'Actuators'=>array('index'),
 	'Manage',
 );
-
-$this->menu=array(
-	array('label'=>'List All', 'url'=>array('index')),
-	array('label'=>'<i class="fa fa-pencil-square-o" aria-hidden="true"></i> New actuator', 'url'=>array('create')),
-);
+//
+//$this->menu=array(
+//	array('label'=>'List All', 'url'=>array('index')),
+//	array('label'=>'<i class="fa fa-pencil-square-o" aria-hidden="true"></i> New actuator', 'url'=>array('create')),
+//);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){

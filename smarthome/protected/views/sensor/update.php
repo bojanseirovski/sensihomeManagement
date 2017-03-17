@@ -7,13 +7,13 @@ $this->breadcrumbs=array(
 	$model->name=>array('view','id'=>$model->id),
 	'Update',
 );
-
-$this->menu=array(
-	array('label'=>'List Sensor', 'url'=>array('index')),
-	array('label'=>'Create Sensor', 'url'=>array('create')),
-	array('label'=>'View Sensor', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Sensor', 'url'=>array('admin')),
-);
+//
+//$this->menu=array(
+//	array('label'=>'List Sensor', 'url'=>array('index')),
+//	array('label'=>'Create Sensor', 'url'=>array('create')),
+//	array('label'=>'View Sensor', 'url'=>array('view', 'id'=>$model->id)),
+//	array('label'=>'Manage Sensor', 'url'=>array('admin')),
+//);
 ?>
 
 <h1>Update Sensor "<?php echo $model->name; ?>"</h1>

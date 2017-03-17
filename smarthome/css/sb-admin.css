@@ -222,3 +222,71 @@ ul.alert-dropdown {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+
+ul.operations , #sub-menu ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+ul.operations  li,  #sub-menu ul li{
+    float: left;
+}
+ul.operations  li a,  #sub-menu ul li a{
+    display: block;
+    text-align: center;
+    padding: 14px 5px;
+    text-decoration: none;
+}
+
+ul.option-per-device{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+ul.option-per-device li {
+    float: left;
+}
+
+ul.option-per-device li a {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.option-per-device li a:hover {
+    color:#000000;
+}
+.menu-container{
+    position: relative;
+}
+.menu_right_float{
+    position: absolute;
+    top:20%;
+    right:0!important;
+    float: right;
+    list-style-type: none;
+    margin: 20px;
+    font-weight: 700;
+    z-index: 101;
+}
+.device_info{
+    position: absolute;
+    float: right;
+    left:70%;
+    margin: 20px;
+    padding-top: 100px;
+}
+.device_info div{
+    margin-top: 20px;
+}
+
+.list-view .summary{
+    position: relative;
+    float: right!important;
+    width: 180px!important;
+    margin-top:-120px!important;
+}
