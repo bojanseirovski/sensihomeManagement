@@ -17,7 +17,7 @@
 												</a>
 								</li>
 								<li class="menu item">
-												<a href="http://<?=	$data->com_id;	?>/id/<?=	$data->serial;	?>">
+												<a href="http://<?=	$data->com_id;	?>/id/<?=	$data->serial;	?>" target="_blank">
 																<i class="fa fa-hand-o-right" aria-hidden="true"></i> Go to device
 												</a>
 								</li>
