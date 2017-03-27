@@ -203,7 +203,7 @@ class	ActuatorController	extends	Controller	{
 												$stateChanged	=	Util::getSimpleRequest($url);
 												$measure	=	new	Measurement();
 												$measure->sensor_id	=	$id;
-												$measure->value	=	($stateChanged['pin2']=='OFF')?"0":"1";
+												$measure->value	=	($stateChanged['pin2']	==	'OFF')	?	"0"	:	"1";
 												$measure->sensor	=	0;
 												$measure->save(false);
 												$out	=	['status'	=>	'OK'];
@@ -252,6 +252,42 @@ class	ActuatorController	extends	Controller	{
 								try	{
 												$cats	=	array();
 												$sData	=	Actuator::model()->getData(0,	15,	$id);
+												if	(count($sData)	<	1)	{
+																$sData	=	Actuator::model()->getAll(0,	15,	$id);
+												}
+												foreach	($sData	as	$k	=>	$oneRead)	{
+																if	(!in_array(array($oneRead['type_name'],	$oneRead['aid']),	$cats))	{
+																				$cats[]	=	array($oneRead['type_name'],	$oneRead['aid']);
+																}
+																$sData[$k]['value']	=	isset($sData[$k]['value'])	?	$sData[$k]['value']	:	0;
+																$sData[$k]['date_measured']	=	isset($sData[$k]['date_measured'])	?	$sData[$k]['date_measured']	:	date('Y-m-d h:i:s');
+																$sData[$k]['message']	=	isset($sData[$k]['message'])	?	$sData[$k]['message']	:	'';
+												}
+												$sensorData['data']	=	$sData;
+												$sensorData['cats']	=	$cats;
+								}
+								catch	(Exception	$e)	{
+												Yii::log("Can't get sensor data");
+								}
+								$this->output($sensorData);
+				}
+
+				//  AJAX
+				public	function	actionDatesearch($offset,	$limit)	{
+								$dateFrom	=	Yii::app()->request->getPost('date_from');
+								$dateFrom	=	isset($dateFrom)	?	$dateFrom	:	null;
+								$dateTo	=	Yii::app()->request->getPost('date_to');
+								$dateTo	=	isset($dateTo)	?	$dateTo	:	null;
+								$offset	=	!isset($offset)	?	0	:	$offset;
+								$limit	=	!isset($limit)	?	25	:	$limit;
+								
+								if	(!isset($dateFrom)	||	!isset($dateTo))	{
+												throw	new	CHttpException(404,	'The requested page does not exist.');
+								}
+								$sensorData	=	null;
+								try	{
+												$cats	=	array();
+												$sData	=	Actuator::model()->getDataByDate($dateFrom,	$dateTo,	$offset,	$page);
 												if	(count($sData)	<	1)	{
 																$sData	=	Actuator::model()->getAll(0,	15,	$id);
 												}

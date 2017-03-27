@@ -6,6 +6,7 @@ $baseUrl = Yii::app()->request->baseUrl;
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="language" content="en">
+								<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
         <link  rel="stylesheet" type="text/css" href="<?= $baseUrl; ?>/js/jqplot/jquery.jqplot.min.css" />
         <link rel="stylesheet" type="text/css" href="<?= $baseUrl; ?>/css/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="<?= $baseUrl; ?>/css/sb-admin.css">
