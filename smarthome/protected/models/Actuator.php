@@ -138,7 +138,24 @@ class Actuator extends CActiveRecord {
                 . 'WHERE `measurement`.sensor=0 '
                 . 'AND actuator.system_id=' . Yii::app()->session['system_id'] . ' '
                 . $filterOne
-                . 'ORDER BY `measurement`.`id` ASC '
+                . 'ORDER BY `measurement`.`id` DESC '
+                . 'LIMIT ' . $offset . ',' . $page . ' ;';
+        return Yii::app()->
+                        db->
+                        createCommand($qry)->
+                        queryAll();
+    }
+
+    public static function getDataByDate( $dateFrom, $dateTo, $offset = 0, $page = 25) {
+
+        $qry = 'SELECT * FROM `actuator` '
+                . 'JOIN `actuator_type` ON actuator_type.id=actuator.type '
+                . 'JOIN `measurement` ON `measurement`.sensor_id=`actuator`.aid '
+                . 'WHERE `measurement`.sensor=0 '
+                . 'AND actuator.system_id=' . Yii::app()->session['system_id'] . ' '
+                . 'AND measurement.date_measured>=' . $dateFrom . ' '
+                . 'AND measurement.date_measured<=' . $dateTo . ' '
+                . 'ORDER BY `measurement`.`id` DESC '
                 . 'LIMIT ' . $offset . ',' . $page . ' ;';
         return Yii::app()->
                         db->

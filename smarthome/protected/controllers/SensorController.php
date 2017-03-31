@@ -90,7 +90,7 @@ class	SensorController	extends	Controller	{
 																				->leftJoin('measurement',	'measurement.sensor_id=sensor.id')
 																				->where('sensor.id='	.	$id	.	' and measurement.sensor=1')
 																				->andWhere('sensor.system_id='	.	Yii::app()->session['system_id'])
-																				->order('measurement.id')
+																				->order('measurement.id DESC')
 																				->limit(15)
 																				->queryAll();
 												foreach	($sData	as	$oneRead)	{
