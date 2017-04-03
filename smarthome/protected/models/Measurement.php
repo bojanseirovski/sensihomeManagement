@@ -56,7 +56,7 @@ class Measurement extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'sensor_id' => 'Sensor',
+			'sensor_id' => 'Device',
 			'value' => 'Value',
 			'date_measured' => 'Date Measured',
 			'message' => 'Message',

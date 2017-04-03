@@ -1,8 +1,8 @@
 <?php
-$this->breadcrumbs	=	array('Actuators');
+$this->breadcrumbs	=	array('Search');
 $baseUrl	=	Yii::app()->request->baseUrl;
 ?>
-<script type="text/html" id="search_url"><?=	$this->createAbsoluteUrl('/actuator/list');	?>?query=</script>
+<script type="text/html" id="search_url"><?=	$this->createAbsoluteUrl('/search/list');	?>?query=</script>
 <ul class="menu_right_float">
     <li class="menu item">
 								<a class="menu item link" href="<?=	$this->createAbsoluteUrl('actuator/create');	?>">

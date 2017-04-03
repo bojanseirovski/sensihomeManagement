@@ -137,9 +137,9 @@ class	ActuatorController	extends	Controller	{
 
 								$this->render(
 																'list',	array(
-												'dataProvider'	=>	$dataProvider,
-												'qry'	=>	$qryClean,
-																)
+																'dataProvider'	=>	$dataProvider,
+																'qry'	=>	$qryClean,
+												)
 								);
 				}
 
@@ -238,8 +238,7 @@ class	ActuatorController	extends	Controller	{
 												$sensorData['data']	=	$sData;
 												$sensorData['cats']	=	$cats;
 												$sensorData['sensor_type_count']	=	count($cats);
-								}
-								catch	(Exception	$e)	{
+								}	catch	(Exception	$e)	{
 												Yii::log("Can't get sensor data:"	.	$e->getMessage());
 								}
 
@@ -265,8 +264,7 @@ class	ActuatorController	extends	Controller	{
 												}
 												$sensorData['data']	=	$sData;
 												$sensorData['cats']	=	$cats;
-								}
-								catch	(Exception	$e)	{
+								}	catch	(Exception	$e)	{
 												Yii::log("Can't get sensor data");
 								}
 								$this->output($sensorData);
@@ -280,7 +278,7 @@ class	ActuatorController	extends	Controller	{
 								$dateTo	=	isset($dateTo)	?	$dateTo	:	null;
 								$offset	=	!isset($offset)	?	0	:	$offset;
 								$limit	=	!isset($limit)	?	25	:	$limit;
-								
+
 								if	(!isset($dateFrom)	||	!isset($dateTo))	{
 												throw	new	CHttpException(404,	'The requested page does not exist.');
 								}
@@ -301,8 +299,7 @@ class	ActuatorController	extends	Controller	{
 												}
 												$sensorData['data']	=	$sData;
 												$sensorData['cats']	=	$cats;
-								}
-								catch	(Exception	$e)	{
+								}	catch	(Exception	$e)	{
 												Yii::log("Can't get sensor data");
 								}
 								$this->output($sensorData);

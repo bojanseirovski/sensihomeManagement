@@ -2,37 +2,34 @@
 
 class	SearchController	extends	Controller	{
 
-				/**
-					* @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-					* using two-column layout. See 'protected/views/layouts/column2.php'.
-					*/
 				public	$layout	=	'//layouts/column2';
 
-				/**
-					* @return array action filters
-					*/
 				public	function	filters()	{
-								return	array(
+								return	[
 												'accessControl',	// perform access control for CRUD operations
-								);
+								];
 				}
 
-				/**
-					* Specifies the access control rules.
-					* This method is used by the 'accessControl' filter.
-					* @return array access control rules
-					*/
 				public	function	accessRules()	{
-								return	array(
-												array('allow',	// allow all users to perform 'index' and 'view' actions
-																'actions'	=>	array('index',	'asearch',	'ssearch'),
-																'users'	=>	array('*'),
-												)
-								);
+								return	[
+												[
+																'allow',	// allow all users to perform 'index' and 'view' actions
+																'actions'	=>	['index',	'asearch',	'ssearch'],
+																'users'	=>	['*'],
+												]
+								];
 				}
 
 				public	function	actionIndex()	{
-								$this->render('index');
+								
+								$sid	=	Yii::app()->session['system_id'];
+								
+								$criteriaCondition	=	'';
+								$criteria	=	new	CDbCriteria(['condition'	=>	$criteriaCondition]);
+								$criteria->order = "id DESC";
+								$dataProvider	=	new	CActiveDataProvider('Measurement',	['criteria'	=>	$criteria]);
+								
+								$this->render('index',['dataProvider'	=>	$dataProvider, 'qry'=>'']);
 				}
 
 				//  AJAX
@@ -43,13 +40,13 @@ class	SearchController	extends	Controller	{
 								$dateTo	=	isset($dateTo)	?	$dateTo	:	null;
 								$offset	=	!isset($offset)	?	0	:	$offset;
 								$limit	=	!isset($limit)	?	25	:	$limit;
-								
+
 								if	(!isset($dateFrom)	||	!isset($dateTo))	{
 												throw	new	CHttpException(404,	'The requested page does not exist.');
 								}
 								$sensorData	=	null;
 								try	{
-												$cats	=	array();
+												$cats	=	[];
 												$sData	=	Actuator::model()->getDataByDate($dateFrom,	$dateTo,	$offset,	$page);
 												if	(count($sData)	<	1)	{
 																$sData	=	Actuator::model()->getAll(0,	15,	$id);
@@ -64,13 +61,11 @@ class	SearchController	extends	Controller	{
 												}
 												$sensorData['data']	=	$sData;
 												$sensorData['cats']	=	$cats;
-								}
-								catch	(Exception	$e)	{
+								}	catch	(Exception	$e)	{
 												Yii::log("Can't get sensor data");
 								}
 								$this->output($sensorData);
 				}
-
 
 				public	function	actionSsearch($offset,	$limit)	{
 								$dateFrom	=	Yii::app()->request->getPost('date_from');
@@ -87,8 +82,8 @@ class	SearchController	extends	Controller	{
 																->leftJoin('measurement',	'measurement.sensor_id=sensor.id')
 																->where('measurement.sensor=1')
 																->andWhere('sensor.system_id='	.	Yii::app()->session['system_id'])
-																->andWhere("measurement.date_measured>='"	.	$dateFrom."'")
-																->andWhere("measurement.date_measured<='"	.	$dateTo."'")
+																->andWhere("measurement.date_measured>='"	.	$dateFrom	.	"'")
+																->andWhere("measurement.date_measured<='"	.	$dateTo	.	"'")
 																->order('measurement.id')
 																->limit($limit,	$offset)
 																->queryAll();
@@ -98,4 +93,5 @@ class	SearchController	extends	Controller	{
 												}
 								}
 				}
+
 }
