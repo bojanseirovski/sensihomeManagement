@@ -14,7 +14,7 @@ function search(urlId, queryId) {
     if ($('#'+urlId)[0]) {
 	var url = $('#'+urlId).text();
 	var query = $('#'+queryId).val();
-	window.location = url + query;
+	window.location = url + encodeURI(query);
     }
 }
 	
