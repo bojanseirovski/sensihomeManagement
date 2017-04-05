@@ -28,6 +28,7 @@
 								<div><strong>Added on : </strong><?=	date('d M Y',	strtotime($data->date_created));	?></div>
 								<div><strong>Type: </strong><?=	CHtml::encode(SensorType::model()->findByPk($data->type)->type_name);	?></div>
 								<div><strong>Unit: </strong><?=	CHtml::encode($data->unit);	?></div>
+								<div><strong>History: </strong><a class="menu item link" href="<?=	$this->createAbsoluteUrl('/search/index?s='.$data->id);	?>"><?=	CHtml::encode($data->name);	?></a></div>
     </div>
     <script type="text/javascript" src="<?=	Yii::app()->request->baseUrl;	?>/js/jqplot/jquery.min.js"></script>
     <script type="text/javascript" src="<?=	Yii::app()->request->baseUrl;	?>/js/jqplot/jquery.jqplot.min.js"></script>
