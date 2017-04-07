@@ -33,7 +33,7 @@ $sData = runQuery($con, 'SELECT * FROM alert;', null, true);
 
 foreach ($sData as $oneModule) {
     $oneSensorData = runQuery($con, 'SELECT id, serial,com_id, name FROM sensor WHERE id=:tby;', array(':tby' => $oneModule['triggered_by']), true);
-    $oneActData = runQuery($con, 'SELECT id, serial,com_id, name FROM actuator WHERE id=:aid;', array(':aid' => $oneModule['actuator_id']), true);
+    $oneActData = runQuery($con, 'SELECT aid, serial,com_id, name FROM actuator WHERE aid=:aid;', array(':aid' => $oneModule['actuator_id']), true);
     if (!isset($oneSensorData[0])) {
 	continue;
     }
