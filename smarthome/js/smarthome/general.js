@@ -21,9 +21,9 @@ $(document).ready(function () {
 				});
 
 				$('.searchdev').click(function () {
-								if($('#datef')[0] && $('#datet')[0]){
-												var datef = $('#datef').val();
-												var datet = $('#datet').val();
+								if($('#date_from')[0] && $('#date_to')[0]){
+												var datef = $('#date_from').val();
+												var datet = $('#date_to').val();
 												searchDate('search_url', datef, datet);
 								}
 								else{
