@@ -17,3 +17,9 @@
 <script type="text/javascript" src="<?= Yii::app()->request->baseUrl; ?>/js/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
 <script type="text/javascript" src="<?= Yii::app()->request->baseUrl; ?>/js/jqplot/plugins/jqplot.pointLabels.min.js"></script>
 
+<div id="noData">
+    <h3>Currently there are no registered devices!</h3>
+    <div>
+	You can <a href="<?=$this->createAbsoluteUrl('/sensor/create'); ?>">add a sensor</a>, <a href="<?=$this->createAbsoluteUrl('/actuator/create'); ?>">add an actuator</a> or wait for <?=Yii::app()->name?> to discover any active devices.
+    </div>
+</div>
