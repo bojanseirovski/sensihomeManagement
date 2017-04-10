@@ -4,15 +4,10 @@
 
 $this->breadcrumbs=array(
 	'Device Types'=>array('index'),
-	'Create',
-);
-
-$this->menu=array(
-	array('label'=>'List DeviceType', 'url'=>array('index')),
-	array('label'=>'Manage DeviceType', 'url'=>array('admin')),
+	'Add',
 );
 ?>
 
-<h1>Create DeviceType</h1>
+<h1>Add Device Type</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

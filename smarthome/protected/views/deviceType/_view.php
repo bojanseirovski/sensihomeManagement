@@ -4,26 +4,24 @@
 ?>
 
 <div class="view">
+    <div>
+	<strong><?= CHtml::encode($data->getAttributeLabel('type')); ?>:</strong>
+	<?=CHtml::link(CHtml::encode($data->type), array('view', 'id'=>$data->id)) ?>
+    </div>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
+    <div>
+	<strong><?= CHtml::encode($data->getAttributeLabel('description')); ?>:</strong>
+	<?= CHtml::encode($data->description); ?>
+    </div>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('type')); ?>:</b>
-	<?php echo CHtml::encode($data->type); ?>
-	<br />
+    <div>
+	<strong><?= CHtml::encode($data->getAttributeLabel('treshold')); ?>:</strong>
+	<?= CHtml::encode($data->treshold); ?>
+    </div>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
-	<?php echo CHtml::encode($data->description); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('treshold')); ?>:</b>
-	<?php echo CHtml::encode($data->treshold); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('theshold_state')); ?>:</b>
-	<?php echo CHtml::encode($data->theshold_state); ?>
-	<br />
-
-
+    <div>
+	<strong><?= CHtml::encode($data->getAttributeLabel('theshold_state')); ?>:</strong>
+	<?= CHtml::encode($data->theshold_state); ?>
+    </div>
 </div>
+<hr/>

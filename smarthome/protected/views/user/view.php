@@ -36,5 +36,14 @@ $this->widget('zii.widgets.CDetailView', array(
 <div id="system_details">
     <a href="<?= $this->createUrl('system/' . Yii::app()->session['system_id']); ?>"><i class="fa fa-list-ol" aria-hidden="true"></i> Details</a>
 </div>
+<div id="system_details">
+    <a href="<?= $this->createUrl('devicetype/index'); ?>"><i class="fa fa-cogs" aria-hidden="true"></i> Device Types</a>
+</div>
+<div id="system_details">
+    <a href="<?= $this->createUrl('sensor/create'); ?>"><i class="fa fa-dashboard" aria-hidden="true"></i> Add Sensor</a>
+</div>
+<div id="system_details">
+    <a href="<?= $this->createUrl('actuator/create'); ?>"><i class="fa fa-power-off" aria-hidden="true"></i> Add Actuator</a>
+</div>
 
 <hr/>
