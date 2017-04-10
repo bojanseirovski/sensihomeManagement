@@ -25,7 +25,7 @@ $this->breadcrumbs = array(
 	</a>
     </li>
     <li class="menu item">
-	<a href="javascript:void(0);" class="del-item" data-id="<?= $model->id; ?>" data-type="devicetype" class="menu item link">
+	<a href="javascript:void(0);" class="del-item" data-id="<?= $model->id; ?>" data-type="deviceType" class="menu item link">
 	    <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
 	</a>
     </li>
