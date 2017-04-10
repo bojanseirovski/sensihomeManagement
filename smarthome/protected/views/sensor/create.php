@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Sensors'=>array('index'),
-	'Create',
+	'Add',
 );
 
 //$this->menu=array(
@@ -13,6 +13,6 @@ $this->breadcrumbs=array(
 //);
 ?>
 
-<h1>Create Sensor</h1>
+<h1>Add Sensor</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Actuators'=>array('index'),
-	'Create',
+	'Add',
 );
 
 //$this->menu=array(
@@ -13,6 +13,6 @@ $this->breadcrumbs=array(
 //);
 ?>
 
-<h1>Create Actuator</h1>
+<h1>Add Actuator</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
