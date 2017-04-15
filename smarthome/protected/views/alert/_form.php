@@ -31,7 +31,6 @@
 
     <div class="row">
 	<?= $form->labelEx($model, 'triggered_by'); ?>
-	<?php // echo $form->textField($model,'triggered_by'); ?>
 	<?php $sModel = new Sensor(); ?>
 	<?= CHtml::dropDownList('Alert[triggered_by]', $model->triggered_by, $sModel->getSensorNameId(), ['class' => 'form-control']); ?>
 	<?= $form->error($model, 'triggered_by'); ?>

@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 );
 
 ?>
-
+<script type="text/javascript" src="<?=	Yii::app()->request->baseUrl;	?>/js/smarthome/alert/list.js"></script>
 <h1>Update <strong><?php echo $model->action; ?></strong></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
