@@ -10,6 +10,9 @@ $baseUrl = Yii::app()->request->baseUrl;
 	</a>
     </li>
 </ul>
+<div>
+    <br/>
+</div>
 <script type="text/javascript" src="<?= $baseUrl; ?>/js/smarthome/actuator/list.js"></script>
 <h1>Actuators</h1>
 <div class="row">

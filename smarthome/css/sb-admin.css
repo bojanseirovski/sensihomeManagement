@@ -278,11 +278,9 @@ ul.option-per-device li a:hover {
 .menu_right_float li{
     float: left;
     display: inline-block;
+    margin: 5px;
 }
-.menu_right_float li:last-child:after { 
-     content: "\a";
-     white-space: pre; 
-}
+
 .device_info{
     position: absolute;
     float: right;

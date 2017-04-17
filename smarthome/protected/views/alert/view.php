@@ -23,7 +23,9 @@ $this->breadcrumbs = array('Rules' => array('index'), $model->id);
 	</a>
     </li>
 </ul>
-
+    <div>
+	<br/>
+    </div>
 <h1>Rule :<?php echo $model->action; ?></h1>
 <?php
 $this->widget('zii.widgets.CDetailView', [

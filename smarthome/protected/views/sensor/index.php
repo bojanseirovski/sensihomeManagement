@@ -10,7 +10,9 @@
 								</a>
 				</li>
 </ul>
-
+<div>
+    <br/>
+</div>
 <h2>Sensor Dashboard</h2>
 <script type="text/html" id="load_data_url"><?=	$this->createAbsoluteUrl('sensor/sensors');	?>?ajax=1</script>
 <script type="text/html" id="single_sensor_url"><?=	$this->createAbsoluteUrl('sensor/one');	?></script>

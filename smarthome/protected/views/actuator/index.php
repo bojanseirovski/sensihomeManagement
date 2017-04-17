@@ -10,7 +10,9 @@
 								</a>
 				</li>
 </ul>
-
+<div>
+    <br/>
+</div>
 <h2>Actuator Dashboard</h2>
 <script type="text/html" id="load_actuator_data_url"><?=	$this->createAbsoluteUrl('actuator/actuators');	?>?ajax=1</script>
 <script type="text/html" id="single_actuator_url"><?=	$this->createAbsoluteUrl('actuator/one');	?></script>

@@ -10,6 +10,9 @@ $baseUrl = Yii::app()->request->baseUrl;
 	</a>
     </li>
 </ul>
+<div>
+    <br/>
+</div>
 <script type="text/javascript" src="<?= $baseUrl; ?>/js/smarthome/sensor/list.js"></script>
 <h1>Sensors</h1>
 <div class="row">
