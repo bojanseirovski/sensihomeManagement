@@ -55,8 +55,8 @@ $(document).ready(function () {
 		    var plot1 = $.jqplot(divId, [theData], {
 			title: $('#dev_name').text(),
 			seriesDefaults: {
-			    renderer: $.jqplot.BarRenderer,
-			    rendererOptions: {fillToZero: true},
+//			    renderer: $.jqplot.BarRenderer,
+//			    rendererOptions: {fillToZero: true},
 			    pointLabels: {
 				show: true,
 				edgeTolerance: 0

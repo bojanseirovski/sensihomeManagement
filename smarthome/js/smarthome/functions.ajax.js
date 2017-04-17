@@ -224,7 +224,7 @@ function loadSensorCharts(action_url, single_sensor_url) {
 
 		    var plot1 = $.jqplot(divId, [theDataSensors[senIdVal]], {
 			seriesDefaults: {
-			    renderer: $.jqplot.BarRenderer,
+//			    renderer: $.jqplot.BarRenderer,
 			    rendererOptions: {fillToZero: true}
 			},
 			seriesColors: [c_color],

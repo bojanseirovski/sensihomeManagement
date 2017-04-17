@@ -23,7 +23,7 @@ body {
 
 #page-wrapper {
     width: 100%;
-				min-height: 200px!important;
+    min-height: 200px!important;
     padding: 0;
     background-color: #fff;
 }
@@ -297,12 +297,12 @@ ul.option-per-device li a:hover {
     margin-bottom: 40px;
 }
 @media(min-width:768px) {
-				.container-fluid{
-								min-height: 390px!important;
-				}
+    .container-fluid{
+	min-height: 390px!important;
+    }
 }
 
 #footer{
-				position: relative!important;
-				bottom: 0!important;
+    position: relative!important;
+    bottom: 0!important;
 }
