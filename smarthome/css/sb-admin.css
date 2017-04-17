@@ -265,14 +265,23 @@ ul.option-per-device li a:hover {
     position: relative;
 }
 .menu_right_float{
-    position: absolute;
-    top:20%;
+    /*position: absolute;*/
+    /*top:20%;*/
     right:0!important;
-    float: right;
-    list-style-type: none;
+    /*float: right;*/
+    
+    list-style-type:none;
     margin: 20px;
     font-weight: 700;
     z-index: 101;
+}
+.menu_right_float li{
+    float: left;
+    display: inline-block;
+}
+.menu_right_float li:last-child:after { 
+     content: "\a";
+     white-space: pre; 
 }
 .device_info{
     position: absolute;

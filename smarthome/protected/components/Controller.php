@@ -15,7 +15,7 @@ class Controller extends CController
 	 * @var array context menu items. This property will be assigned to {@link CMenu::items}.
 	 */
 	public $menu=array();
-
+	public $prevUrl;
 	/**
 	 * @var array the breadcrumbs of the current page. The value of this property will
 	 * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
@@ -27,6 +27,11 @@ class Controller extends CController
             if(!isset(Yii::app()->session['system_id'])&& (Yii::app()->controller->id!='register') && (Yii::app()->controller->id!='login')){
                 $this->redirect($this->createAbsoluteUrl('/login/login'));
             }
+	    if(isset(Yii::app()->session['prev_url'])){
+		$this->prevUrl = Yii::app()->session['prev_url'];
+	    }
+	    Yii::app()->session['prev_url'] = str_replace('/index.php', '', Yii::app()->request->url);
+	    
             return true;
         }
 

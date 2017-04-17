@@ -70,7 +70,7 @@
 
     <div class="row buttons">
         <?= CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array("class" => "btn btn-lg btn-success")); ?>
-        <?= CHtml::link('Cancel', ['/alert/list'], ['class' => 'btn btn-lg btn-danger']) ?>
+        <?= CHtml::link('Cancel', [$this->prevUrl], ['class' => 'btn btn-lg btn-danger']) ?>
     </div>
 
     <?php $this->endWidget(); ?>

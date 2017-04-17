@@ -85,7 +85,7 @@ $baseUrl = Yii::app()->request->baseUrl;
 				'visible' => !Yii::app()->user->isGuest
 			    ),
 			    array(
-				'label' => '<i class="fa fa-search" aria-hidden="true"></i> Search',
+				'label' => '<i class="fa fa-search" aria-hidden="true"></i> Search Data',
 				'url' => array('/search/index'),
 				'itemOptions' => array('class' => 'submenu-parent'),
 				'visible' => !Yii::app()->user->isGuest
