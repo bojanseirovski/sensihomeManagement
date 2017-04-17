@@ -64,6 +64,7 @@ $baseUrl = Yii::app()->request->baseUrl;
 				'label' => '<i class="fa fa-bar-chart" aria-hidden="true"></i> Home',
 				'url' => array('/site/index'),
 				'itemOptions' => array('class' => 'submenu-parent'),
+				'visible' => !Yii::app()->user->isGuest
 			    ),
 			    array(
 				'label' => '<i class="fa fa-fw fa-dashboard"></i> Sensors',
@@ -95,7 +96,7 @@ $baseUrl = Yii::app()->request->baseUrl;
 				'visible' => !Yii::app()->user->isGuest
 			    ),
 			    array('label' => '<i class="fa fa-sign-in" aria-hidden="true"></i> Login', 'url' => array('/login/login'), 'visible' => Yii::app()->user->isGuest),
-			    array('label' => '<i class="fa fa-users"></i> Register', 'url' => array('/register'), 'visible' => Yii::app()->user->isGuest),
+//			    array('label' => '<i class="fa fa-users"></i> Register', 'url' => array('/register'), 'visible' => Yii::app()->user->isGuest),
 			    array('label' => '<i class="fa fa-sign-out" aria-hidden="true"></i> Logout (' . Yii::app()->session['user_name'] . ')', 'url' => array('/login/logout'), 'visible' => !Yii::app()->user->isGuest)
 			),
 		    ));
