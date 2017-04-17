@@ -207,7 +207,7 @@ function loadSensorCharts(action_url, single_sensor_url) {
 			});
 		    }
 		});
-		if(actuatorIds.length>0){
+		if(sensorIds.length>0){
 		    $("#noData").remove();
 		}
 

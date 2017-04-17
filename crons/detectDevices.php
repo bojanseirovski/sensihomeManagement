@@ -35,14 +35,24 @@ try {
 // load all devices from database
     $systemInfoQry = 'SELECT * FROM system ORDER BY prim_key DESC LIMIT 1;';
     $systemInfo = runQuery($con, $systemInfoQry, null, true)[0];
+    //  get all device types
+    $allDeviTypesQry = 'SELECT type FROM  device_type;';
+    $allDeviTypes = runQuery($con, $allDeviTypesQry, null, true);
+
 // load all devices from database
-    $allDevicesQry = 'SELECT * FROM sensor, actuator';
-    $allDevices = runQuery($con, $allDevicesQry, null, true);
+    $allDevicesQryS = 'SELECT * FROM sensor;';
+    $allDevicesS = runQuery($con, $allDevicesQryS, null, true);
+
+    $allDevicesQryA = 'SELECT * FROM  actuator;';
+    $allDevicesA = runQuery($con, $allDevicesQryA, null, true);
+    
+    $allDevices = array_merge($allDevicesS,$allDevicesA);
+    
     $allIds = array();
     foreach ($allDevices as $oneDev) {
         $allIds[] = $oneDev['serial'];
     }
-
+    var_export($allIds);
     for ($i = 1; $i < 255; $i++) {
         try {
             $currentIp = $ipSegments[0] . '.' . $ipSegments[1] . '.' . $ipSegments[2] . '.' . $i;
@@ -52,8 +62,14 @@ try {
             $r = getSimpleRequest($url);
             $randomDevName = $ipSegments[0] . '-' . $ipSegments[1] . '-' . $ipSegments[2] . '-' . $i;
             $isThisDeviceIp = ($currentIp == $ip);
-
-            if (isset($r['status']) && ($r['status'] == "OK") && isset($r['id']) && (strlen($r['id']) > 6) && !in_array($r['id'], $allIds) && !$isThisDeviceIp) {
+            $theId = (string)$r['id'];
+            if (
+                isset($r['status']) 
+                && ($r['status'] == "OK") 
+                && isset($r['id']) 
+                && ($r['id']> 6) 
+                && !in_array($theId, $allIds) 
+                && !$isThisDeviceIp) {
                 //	save data
                 /**
                  * 3 types : A - actuator, S - sensor, H - hybrid
@@ -73,7 +89,6 @@ try {
                 $query = 'INSERT INTO sensor (type, unit, name, com_id, system_id, value_fields, serial)' .
                     ' VALUES(:type, :unit, :name, :com_id, :sysid, :valf, :snum);';
                 if ($r['dev_type'] == 'S') {
-                    echo "sensor";
                     $query = 'INSERT INTO sensor (type, unit, name, com_id, system_id, value_fields, serial)' .
                         ' VALUES(:type, :unit, :name, :com_id, :sysid, :valf, :snum);';
                     runQuery($con, $query, $args);
@@ -100,6 +115,17 @@ try {
                     $args[':state'] = 'off';
 
                     runQuery($con, $query2, $args);
+                }
+                
+                $thisDevType = isset($r['type_name'])?$r['type_name']:$r['value_fields'];
+                if(!in_array($thisDevType, $allDeviTypes) || count($allDeviTypes)<1){
+                    $queryDt = 'INSERT INTO device_type (type,  description)'.
+                        ' VALUES(:type, :desc);';
+                    $argsDt = [
+                        ':type'=>$thisDevType,
+                        ':desc'=>$thisDevType,
+                    ];
+                    runQuery($con, $queryDt, $argsDt);
                 }
             }
         } 

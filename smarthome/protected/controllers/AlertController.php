@@ -57,9 +57,6 @@ class AlertController extends Controller {
     public function actionCreate() {
         $model = new Alert;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Alert'])) {
             $model->attributes = $_POST['Alert'];
             if ($model->save(false))
@@ -79,11 +76,7 @@ class AlertController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Alert'])) {
-            Yii::log(var_export($_POST, TRUE));
             $model->attributes = $_POST['Alert'];
             if ($model->save(false))
                 $this->redirect(array('view', 'id' => $model->id));
