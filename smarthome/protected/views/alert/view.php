@@ -59,6 +59,11 @@ $this->widget('zii.widgets.CDetailView', [
 	    "value" => CHtml::link($this->getActuatorNameAndId($model->actuator_id)['name'], ['/actuator/one', 'id' => $model->actuator_id])
 	],
 	'actuator_state',
+	'notify' => [
+	    "label" => "Notify Adminitrator",
+	    'type' => 'raw',
+	    "value" => isset($model->notify) ? 'yes' : 'no'
+	],
     ],
 	]
 );

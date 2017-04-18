@@ -57,6 +57,11 @@ $sname = $this->getSensorNameAndId($data->triggered_by)['name'];
 	<strong><?= CHtml::encode($data->getAttributeLabel('enabled')); ?>:</strong>
 	<?= ($data->enabled == 1) ? 'yes' : 'no'; ?>
     </div>
+    
+    <div>
+	<strong>Notify administrator:</strong>
+	<?= isset($data->notify) ? 'yes' : 'no'; ?>
+    </div>
 
     <div>
 	<strong><?= CHtml::encode($data->getAttributeLabel('date_created')); ?>:</strong>

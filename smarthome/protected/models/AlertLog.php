@@ -1,28 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "alert".
+ * This is the model class for table "alert_log".
  *
- * The followings are the available columns in table 'alert':
+ * The followings are the available columns in table 'alert_log':
  * @property integer $id
- * @property string $action
- * @property string $scheduled_on
- * @property integer $triggered_by
- * @property string $trigger_value
- * @property integer $enabled
- * @property string $date_created
- * @property integer $actuator_id
- * @property string $actuator_state
- * @property integer $notify
+ * @property integer $sid
+ * @property integer $aid
+ * @property integer $alid
+ * @property string $alname
+ * @property string $svalue
+ * @property string $astate
+ * @property string $date
  */
-class Alert extends CActiveRecord
+class AlertLog extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'alert';
+		return 'alert_log';
 	}
 
 	/**
@@ -33,12 +31,12 @@ class Alert extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('action, scheduled_on, triggered_by, trigger_value, enabled, date_created', 'required'),
-			array('triggered_by, enabled, actuator_id, notify', 'numerical', 'integerOnly'=>true),
-			array('action, trigger_value, actuator_state', 'length', 'max'=>255),
+			array('alid, alname, svalue, astate, date', 'required'),
+			array('sid, aid, alid', 'numerical', 'integerOnly'=>true),
+			array('alname, svalue, astate', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, action, scheduled_on, triggered_by, trigger_value, enabled, date_created, actuator_id, actuator_state, notify', 'safe', 'on'=>'search'),
+			array('id, sid, aid, alid, alname, svalue, astate, date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,15 +58,13 @@ class Alert extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'action' => 'Action',
-			'scheduled_on' => 'Scheduled On',
-			'triggered_by' => 'Triggered By',
-			'trigger_value' => 'Trigger Value',
-			'enabled' => 'Enabled',
-			'date_created' => 'Date Created',
-			'actuator_id' => 'Actuator',
-			'actuator_state' => 'Actuator State',
-			'notify' => 'Notify',
+			'sid' => 'Sid',
+			'aid' => 'Aid',
+			'alid' => 'Alid',
+			'alname' => 'Alname',
+			'svalue' => 'Svalue',
+			'astate' => 'Astate',
+			'date' => 'Date',
 		);
 	}
 
@@ -91,15 +87,13 @@ class Alert extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('action',$this->action,true);
-		$criteria->compare('scheduled_on',$this->scheduled_on,true);
-		$criteria->compare('triggered_by',$this->triggered_by);
-		$criteria->compare('trigger_value',$this->trigger_value,true);
-		$criteria->compare('enabled',$this->enabled);
-		$criteria->compare('date_created',$this->date_created,true);
-		$criteria->compare('actuator_id',$this->actuator_id);
-		$criteria->compare('actuator_state',$this->actuator_state,true);
-		$criteria->compare('notify',$this->notify);
+		$criteria->compare('sid',$this->sid);
+		$criteria->compare('aid',$this->aid);
+		$criteria->compare('alid',$this->alid);
+		$criteria->compare('alname',$this->alname,true);
+		$criteria->compare('svalue',$this->svalue,true);
+		$criteria->compare('astate',$this->astate,true);
+		$criteria->compare('date',$this->date,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -110,7 +104,7 @@ class Alert extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Alert the static model class
+	 * @return AlertLog the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

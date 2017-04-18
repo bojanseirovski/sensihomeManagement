@@ -68,6 +68,12 @@
         <?= $form->error($model, 'actuator_state'); ?>
     </div>
 
+    <div class="row">
+        <?= $form->labelEx($model, 'notify'); ?>
+        <?= CHtml::checkBox('Alert[notify]', $model->notify); ?>
+        <?= $form->error($model, 'notify'); ?>
+    </div>
+
     <div class="row buttons">
         <?= CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array("class" => "btn btn-lg btn-success")); ?>
         <?= CHtml::link('Cancel', [$this->prevUrl], ['class' => 'btn btn-lg btn-danger']) ?>

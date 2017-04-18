@@ -1,24 +1,29 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.5.2
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2015 at 03:28 AM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Generation Time: Apr 18, 2017 at 03:46 PM
+-- Server version: 5.7.9
+-- PHP Version: 5.6.16
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `smarthome`
 --
+CREATE DATABASE IF NOT EXISTS `smarthome` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `smarthome`;
 
 -- --------------------------------------------------------
 
@@ -26,6 +31,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `actuator`
 --
 
+DROP TABLE IF EXISTS `actuator`;
 CREATE TABLE IF NOT EXISTS `actuator` (
   `aid` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -37,16 +43,15 @@ CREATE TABLE IF NOT EXISTS `actuator` (
   `value_fields` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `serial` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`aid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `actuator`
 --
 
-INSERT INTO `actuator` (`aid`, `type`, `state`, `name`, `com_id`, `system_id`, `date_created`, `value_fields`, `serial`) VALUES
-(4, '13', 'on', 'frontswitch', '', 6, '2015-08-14 14:01:28', 'pin3,pin5', '192168222'),
-(5, '14', '1', 'porch', '::1', 6, '2015-07-30 13:37:25', '', ''),
-(21, '30', '1', 'porch', '::1', 6, '2015-07-30 14:05:00', '', '');
+INSERT IGNORE INTO `actuator` (`aid`, `type`, `state`, `name`, `com_id`, `system_id`, `date_created`, `value_fields`, `serial`) VALUES
+(24, '30', 'off', '192-168-2-60', '192.168.2.60', 6, '2017-03-04 17:51:42', 'pin1', '10290203'),
+(25, '30', 'off', '192-168-2-22', '192.168.2.22', 6, '2017-03-04 19:33:00', 'pin1', '10271918');
 
 -- --------------------------------------------------------
 
@@ -54,18 +59,19 @@ INSERT INTO `actuator` (`aid`, `type`, `state`, `name`, `com_id`, `system_id`, `
 -- Table structure for table `actuator_type`
 --
 
+DROP TABLE IF EXISTS `actuator_type`;
 CREATE TABLE IF NOT EXISTS `actuator_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `actuator_type`
 --
 
-INSERT INTO `actuator_type` (`id`, `value`, `type_name`) VALUES
+INSERT IGNORE INTO `actuator_type` (`id`, `value`, `type_name`) VALUES
 (1, 'SWITCH', 'Switch'),
 (3, 'SWITCH', 'Switch'),
 (13, 'A', 'HOMEFRONT2'),
@@ -78,6 +84,7 @@ INSERT INTO `actuator_type` (`id`, `value`, `type_name`) VALUES
 -- Table structure for table `alert`
 --
 
+DROP TABLE IF EXISTS `alert`;
 CREATE TABLE IF NOT EXISTS `alert` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -88,16 +95,37 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `date_created` timestamp NOT NULL,
   `actuator_id` int(11) DEFAULT NULL,
   `actuator_state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `notify` tinyint(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `alert`
 --
 
-INSERT INTO `alert` (`id`, `action`, `scheduled_on`, `triggered_by`, `trigger_value`, `enabled`, `date_created`, `actuator_id`, `actuator_state`) VALUES
-(1, 'Start sprinkler system', '2015-07-25 17:43:44', 1, '29', 1, '2015-07-25 17:43:44', 3, 'on');
+INSERT IGNORE INTO `alert` (`id`, `action`, `scheduled_on`, `triggered_by`, `trigger_value`, `enabled`, `date_created`, `actuator_id`, `actuator_state`, `notify`) VALUES
+(1, 'Start sprinkler system', '2015-07-25 21:43:44', 61, '21', 1, '2015-07-25 04:00:00', 24, 'on', NULL),
+(2, 'Turn on lights', '2017-03-16 17:32:23', 62, '29', 1, '2017-03-16 17:32:23', 25, 'on', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alert_log`
+--
+
+DROP TABLE IF EXISTS `alert_log`;
+CREATE TABLE IF NOT EXISTS `alert_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` int(11) DEFAULT NULL,
+  `aid` int(11) DEFAULT NULL,
+  `alid` int(11) NOT NULL,
+  `alname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `svalue` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `astate` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -105,6 +133,7 @@ INSERT INTO `alert` (`id`, `action`, `scheduled_on`, `triggered_by`, `trigger_va
 -- Table structure for table `device_type`
 --
 
+DROP TABLE IF EXISTS `device_type`;
 CREATE TABLE IF NOT EXISTS `device_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -113,14 +142,14 @@ CREATE TABLE IF NOT EXISTS `device_type` (
   `theshold_state` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `device_type`
 --
 
-INSERT INTO `device_type` (`id`, `type`, `description`, `treshold`, `theshold_state`) VALUES
-(1, 'TEMP', 'Temperature', '', ''),
+INSERT IGNORE INTO `device_type` (`id`, `type`, `description`, `treshold`, `theshold_state`) VALUES
+(1, 'TEMP', 'Temperature', '29', 'on'),
 (2, 'HUM', 'Humidity', '', ''),
 (3, 'ACT', 'Actuator', '', '');
 
@@ -130,6 +159,7 @@ INSERT INTO `device_type` (`id`, `type`, `description`, `treshold`, `theshold_st
 -- Table structure for table `measurement`
 --
 
+DROP TABLE IF EXISTS `measurement`;
 CREATE TABLE IF NOT EXISTS `measurement` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sensor_id` int(11) NOT NULL,
@@ -138,26 +168,303 @@ CREATE TABLE IF NOT EXISTS `measurement` (
   `message` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `sensor` int(3) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB AUTO_INCREMENT=379 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `measurement`
 --
 
-INSERT INTO `measurement` (`id`, `sensor_id`, `value`, `date_measured`, `message`, `sensor`) VALUES
-(1, 1, '12.5', '2015-07-20 13:58:41', '', 1),
-(2, 2, '25', '2015-07-20 13:58:41', '', 1),
-(3, 1, '15', '2015-07-20 13:58:41', '', 1),
-(4, 2, '22', '2015-07-20 13:58:41', '', 1),
-(5, 1, '13', '2015-07-20 13:58:41', '', 1),
-(6, 2, '1', '2015-07-22 13:44:19', '', 0),
-(7, 1, '0', '2015-07-22 13:44:19', '', 0),
-(8, 1, '1', '2015-07-22 13:53:13', '', 0),
-(9, 2, '0', '2015-07-22 13:53:23', '', 0),
-(10, 16, '25', '2015-07-28 14:04:32', '', 1),
-(11, 16, '19', '2015-07-28 14:04:32', '', 1),
-(12, 4, '0', '2015-07-29 14:04:02', '', 0),
-(13, 4, '1', '2015-07-29 14:04:30', '', 0);
+INSERT IGNORE INTO `measurement` (`id`, `sensor_id`, `value`, `date_measured`, `message`, `sensor`) VALUES
+(1, 63, '12.5', '2015-07-20 17:58:41', '', 1),
+(2, 63, '25', '2015-07-20 17:58:41', '', 1),
+(3, 63, '15', '2015-07-20 17:58:41', '', 1),
+(4, 63, '22', '2015-07-20 17:58:41', '', 1),
+(5, 63, '13', '2015-07-20 17:58:41', '', 1),
+(6, 25, '1', '2015-07-22 17:44:19', '', 0),
+(7, 25, '0', '2015-07-22 17:44:19', '', 0),
+(8, 25, '1', '2015-07-22 17:53:13', '', 0),
+(9, 25, '0', '2015-07-22 17:53:23', '', 0),
+(10, 16, '25', '2015-07-28 18:04:32', '', 1),
+(11, 16, '19', '2015-07-28 18:04:32', '', 1),
+(12, 4, '0', '2015-07-29 18:04:02', '', 0),
+(13, 4, '1', '2015-07-29 18:04:30', '', 0),
+(14, 61, '24', '2017-03-04 13:40:35', '', 1),
+(15, 61, '24', '2017-03-04 13:50:05', '', 1),
+(16, 61, '24', '2017-03-04 14:00:05', '', 1),
+(17, 61, '23', '2017-03-04 14:10:04', '', 1),
+(18, 61, '23', '2017-03-04 14:20:04', '', 1),
+(19, 61, '22', '2017-03-04 14:30:02', '', 1),
+(20, 61, '23', '2017-03-04 14:40:02', '', 1),
+(21, 61, '23', '2017-03-04 14:50:02', '', 1),
+(22, 61, '23', '2017-03-04 15:00:03', '', 1),
+(23, 61, '23', '2017-03-04 15:10:02', '', 1),
+(24, 61, '23', '2017-03-04 15:20:02', '', 1),
+(25, 61, '23', '2017-03-04 15:30:03', '', 1),
+(26, 61, '24', '2017-03-04 15:40:02', '', 1),
+(27, 61, '24', '2017-03-04 15:50:02', '', 1),
+(28, 61, '24', '2017-03-04 16:00:03', '', 1),
+(29, 61, '24', '2017-03-04 16:10:02', '', 1),
+(30, 61, '23', '2017-03-04 16:20:02', '', 1),
+(31, 61, '23', '2017-03-04 16:30:02', '', 1),
+(32, 61, '23', '2017-03-04 16:40:01', '', 1),
+(33, 61, '23', '2017-03-04 16:50:01', '', 1),
+(34, 61, '23', '2017-03-04 17:00:03', '', 1),
+(35, 61, '24', '2017-03-04 17:10:01', '', 1),
+(36, 61, '23', '2017-03-04 17:20:02', '', 1),
+(37, 61, '23', '2017-03-04 17:30:03', '', 1),
+(38, 61, '23', '2017-03-04 17:40:02', '', 1),
+(39, 61, '23', '2017-03-04 17:50:02', '', 1),
+(40, 61, '23', '2017-03-04 18:00:03', '', 1),
+(41, 61, '23', '2017-03-04 18:10:02', '', 1),
+(42, 61, '23', '2017-03-04 18:20:02', '', 1),
+(43, 61, '23', '2017-03-04 18:30:03', '', 1),
+(44, 61, '23', '2017-03-04 18:40:02', '', 1),
+(45, 61, '23', '2017-03-04 18:50:01', '', 1),
+(46, 61, '23', '2017-03-04 19:00:03', '', 1),
+(47, 61, '23', '2017-03-04 19:10:01', '', 1),
+(48, 61, '23', '2017-03-04 19:20:01', '', 1),
+(49, 61, '23', '2017-03-04 19:30:03', '', 1),
+(50, 61, '23', '2017-03-04 19:40:02', '', 1),
+(51, 61, '23', '2017-03-04 19:50:01', '', 1),
+(52, 61, '23', '2017-03-04 20:00:03', '', 1),
+(53, 61, '23', '2017-03-04 20:10:01', '', 1),
+(54, 61, '23', '2017-03-04 20:20:02', '', 1),
+(55, 61, '23', '2017-03-04 20:30:03', '', 1),
+(56, 61, '23', '2017-03-04 20:40:02', '', 1),
+(57, 61, '23', '2017-03-04 20:50:02', '', 1),
+(58, 61, '23', '2017-03-04 21:00:03', '', 1),
+(59, 61, '23', '2017-03-04 21:10:01', '', 1),
+(60, 61, '24', '2017-03-04 21:20:01', '', 1),
+(61, 61, '23', '2017-03-04 21:30:03', '', 1),
+(62, 61, '23', '2017-03-04 21:40:01', '', 1),
+(63, 61, '23', '2017-03-04 21:50:01', '', 1),
+(64, 61, '22', '2017-03-04 22:00:03', '', 1),
+(65, 61, '22', '2017-03-04 22:10:01', '', 1),
+(66, 61, '22', '2017-03-04 22:20:02', '', 1),
+(67, 61, '24', '2017-03-04 22:30:03', '', 1),
+(68, 61, '22', '2017-03-04 22:40:02', '', 1),
+(69, 61, '22', '2017-03-04 22:50:02', '', 1),
+(70, 61, '22', '2017-03-04 23:00:03', '', 1),
+(71, 61, '22', '2017-03-04 23:10:01', '', 1),
+(72, 61, '22', '2017-03-04 23:20:02', '', 1),
+(73, 61, '22', '2017-03-04 23:30:03', '', 1),
+(74, 61, '22', '2017-03-04 23:40:02', '', 1),
+(75, 61, '22', '2017-03-04 23:50:01', '', 1),
+(76, 61, '22', '2017-03-05 00:00:02', '', 1),
+(77, 61, '22', '2017-03-05 00:10:01', '', 1),
+(78, 61, '23', '2017-03-05 00:20:02', '', 1),
+(79, 61, '23', '2017-03-05 00:30:03', '', 1),
+(80, 61, '22', '2017-03-05 00:40:02', '', 1),
+(81, 61, '22', '2017-03-05 00:50:01', '', 1),
+(82, 61, '22', '2017-03-05 01:00:02', '', 1),
+(83, 61, '22', '2017-03-05 01:10:02', '', 1),
+(84, 61, '22', '2017-03-05 01:20:01', '', 1),
+(85, 61, '22', '2017-03-05 01:30:02', '', 1),
+(86, 61, '22', '2017-03-05 01:40:01', '', 1),
+(87, 61, '22', '2017-03-05 01:50:01', '', 1),
+(88, 61, '22', '2017-03-05 02:00:03', '', 1),
+(89, 61, '22', '2017-03-05 02:10:02', '', 1),
+(90, 61, '22', '2017-03-05 02:20:01', '', 1),
+(91, 61, '22', '2017-03-05 02:30:03', '', 1),
+(92, 61, '21', '2017-03-05 02:40:02', '', 1),
+(93, 61, '21', '2017-03-05 02:50:01', '', 1),
+(94, 61, '21', '2017-03-05 03:00:03', '', 1),
+(95, 61, '22', '2017-03-05 03:10:02', '', 1),
+(96, 61, '22', '2017-03-05 03:20:01', '', 1),
+(97, 61, '22', '2017-03-05 03:30:02', '', 1),
+(98, 61, '22', '2017-03-05 03:40:01', '', 1),
+(99, 61, '22', '2017-03-05 03:50:02', '', 1),
+(100, 61, '22', '2017-03-05 04:00:02', '', 1),
+(101, 61, '22', '2017-03-05 04:10:02', '', 1),
+(102, 61, '21', '2017-03-05 04:20:02', '', 1),
+(103, 61, '21', '2017-03-05 04:30:03', '', 1),
+(104, 61, '22', '2017-03-05 04:40:02', '', 1),
+(105, 61, '22', '2017-03-05 04:50:02', '', 1),
+(106, 61, '22', '2017-03-05 05:00:03', '', 1),
+(107, 61, '22', '2017-03-05 05:10:02', '', 1),
+(108, 61, '22', '2017-03-05 05:20:03', '', 1),
+(109, 61, '22', '2017-03-05 05:30:03', '', 1),
+(110, 61, '22', '2017-03-05 05:40:02', '', 1),
+(111, 61, '22', '2017-03-05 05:50:01', '', 1),
+(112, 61, '25', '2017-03-05 06:00:03', '', 1),
+(113, 61, '23', '2017-03-05 06:10:01', '', 1),
+(114, 61, '23', '2017-03-05 06:20:02', '', 1),
+(115, 61, '22', '2017-03-05 06:30:03', '', 1),
+(116, 61, '22', '2017-03-05 06:40:02', '', 1),
+(117, 61, '22', '2017-03-05 06:50:02', '', 1),
+(118, 61, '23', '2017-03-05 07:00:03', '', 1),
+(119, 61, '23', '2017-03-05 07:10:02', '', 1),
+(120, 61, '23', '2017-03-05 07:20:01', '', 1),
+(121, 61, '23', '2017-03-05 07:30:03', '', 1),
+(122, 61, '23', '2017-03-05 07:40:01', '', 1),
+(123, 61, '22', '2017-03-05 07:50:02', '', 1),
+(124, 61, '23', '2017-03-05 08:00:03', '', 1),
+(125, 61, '23', '2017-03-05 08:10:02', '', 1),
+(126, 61, '23', '2017-03-05 08:20:02', '', 1),
+(127, 61, '23', '2017-03-05 08:30:03', '', 1),
+(128, 61, '22', '2017-03-05 08:40:01', '', 1),
+(129, 61, '22', '2017-03-05 08:50:02', '', 1),
+(130, 61, '22', '2017-03-05 09:00:03', '', 1),
+(131, 61, '23', '2017-03-05 09:10:02', '', 1),
+(132, 61, '23', '2017-03-05 09:20:02', '', 1),
+(133, 61, '23', '2017-03-05 09:30:03', '', 1),
+(134, 61, '23', '2017-03-05 09:40:02', '', 1),
+(135, 61, '23', '2017-03-05 09:50:02', '', 1),
+(136, 61, '23', '2017-03-05 10:00:03', '', 1),
+(137, 61, '22', '2017-03-05 10:10:01', '', 1),
+(138, 61, '22', '2017-03-05 10:20:02', '', 1),
+(139, 61, '23', '2017-03-05 10:30:02', '', 1),
+(140, 61, '22', '2017-03-05 10:40:02', '', 1),
+(141, 61, '22', '2017-03-05 10:50:01', '', 1),
+(142, 61, '22', '2017-03-05 11:00:04', '', 1),
+(143, 61, '22', '2017-03-05 11:10:01', '', 1),
+(144, 61, '22', '2017-03-05 11:20:01', '', 1),
+(145, 61, '22', '2017-03-05 11:30:03', '', 1),
+(146, 61, '22', '2017-03-05 11:40:01', '', 1),
+(147, 61, '22', '2017-03-05 11:50:02', '', 1),
+(148, 61, '22', '2017-03-05 12:00:03', '', 1),
+(150, 61, '22', '2017-03-05 12:20:01', '', 1),
+(151, 61, '22', '2017-03-05 12:30:02', '', 1),
+(152, 61, '22', '2017-03-05 12:40:01', '', 1),
+(153, 61, '22', '2017-03-05 12:50:01', '', 1),
+(154, 61, '21', '2017-03-05 13:00:03', '', 1),
+(155, 61, '21', '2017-03-05 13:10:02', '', 1),
+(157, 61, '22', '2017-03-05 13:30:02', '', 1),
+(158, 61, '22', '2017-03-05 13:40:02', '', 1),
+(159, 61, '22', '2017-03-05 13:50:02', '', 1),
+(160, 61, '22', '2017-03-05 14:00:02', '', 1),
+(161, 61, '21', '2017-03-05 14:10:02', '', 1),
+(162, 61, '21', '2017-03-05 14:20:02', '', 1),
+(163, 61, '21', '2017-03-05 14:30:02', '', 1),
+(164, 61, '22', '2017-03-05 14:40:01', '', 1),
+(166, 61, '22', '2017-03-05 15:00:04', '', 1),
+(167, 61, '22', '2017-03-05 15:10:01', '', 1),
+(169, 61, '21', '2017-03-05 15:30:02', '', 1),
+(170, 61, '21', '2017-03-05 15:40:02', '', 1),
+(171, 61, '21', '2017-03-05 15:50:01', '', 1),
+(172, 61, '22', '2017-03-05 16:00:02', '', 1),
+(174, 61, '22', '2017-03-05 16:20:01', '', 1),
+(175, 61, '22', '2017-03-05 16:30:03', '', 1),
+(176, 61, '21', '2017-03-05 16:40:01', '', 1),
+(177, 61, '21', '2017-03-05 16:50:02', '', 1),
+(178, 61, '22', '2017-03-05 17:00:02', '', 1),
+(179, 61, '22', '2017-03-05 17:10:02', '', 1),
+(180, 61, '22', '2017-03-05 17:20:02', '', 1),
+(181, 61, '22', '2017-03-05 17:30:02', '', 1),
+(182, 61, '21', '2017-03-05 17:40:01', '', 1),
+(183, 61, '21', '2017-03-05 17:50:02', '', 1),
+(184, 61, '22', '2017-03-05 18:00:03', '', 1),
+(185, 61, '22', '2017-03-05 18:10:01', '', 1),
+(186, 61, '22', '2017-03-05 18:20:02', '', 1),
+(187, 61, '22', '2017-03-05 18:30:03', '', 1),
+(188, 61, '22', '2017-03-05 18:40:02', '', 1),
+(189, 61, '22', '2017-03-05 18:50:02', '', 1),
+(190, 61, '23', '2017-03-05 19:00:03', '', 1),
+(192, 61, '22', '2017-03-05 19:20:01', '', 1),
+(193, 61, '23', '2017-03-05 19:30:02', '', 1),
+(194, 61, '22', '2017-03-05 19:40:02', '', 1),
+(196, 61, '22', '2017-03-05 20:00:03', '', 1),
+(197, 61, '22', '2017-03-05 20:10:02', '', 1),
+(198, 61, '22', '2017-03-05 20:20:02', '', 1),
+(200, 61, '22', '2017-03-05 20:40:02', '', 1),
+(201, 61, '22', '2017-03-05 20:50:02', '', 1),
+(204, 61, '22', '2017-03-05 21:30:02', '', 1),
+(205, 61, '22', '2017-03-05 21:40:02', '', 1),
+(206, 61, '22', '2017-03-05 21:50:02', '', 1),
+(207, 61, '21', '2017-03-05 22:00:02', '', 1),
+(208, 61, '21', '2017-03-05 22:10:02', '', 1),
+(209, 61, '21', '2017-03-05 22:20:02', '', 1),
+(212, 61, '22', '2017-03-05 22:50:02', '', 1),
+(214, 61, '22', '2017-03-05 23:10:02', '', 1),
+(216, 61, '22', '2017-03-05 23:30:03', '', 1),
+(219, 61, '21', '2017-03-06 00:00:03', '', 1),
+(220, 61, '21', '2017-03-06 00:10:01', '', 1),
+(222, 61, '21', '2017-03-06 00:30:02', '', 1),
+(224, 61, '22', '2017-03-06 00:50:01', '', 1),
+(225, 61, '22', '2017-03-06 01:00:02', '', 1),
+(226, 61, '22', '2017-03-06 01:10:01', '', 1),
+(228, 61, '21', '2017-03-06 01:30:03', '', 1),
+(229, 61, '22', '2017-03-06 01:40:02', '', 1),
+(230, 61, '22', '2017-03-06 01:50:01', '', 1),
+(231, 61, '22', '2017-03-06 02:00:02', '', 1),
+(235, 61, '21', '2017-03-06 02:40:02', '', 1),
+(237, 61, '21', '2017-03-06 03:00:02', '', 1),
+(238, 61, '21', '2017-03-06 03:10:02', '', 1),
+(239, 61, '21', '2017-03-06 03:20:02', '', 1),
+(241, 61, '21', '2017-03-06 03:40:02', '', 1),
+(242, 61, '22', '2017-03-06 03:50:02', '', 1),
+(243, 61, '22', '2017-03-06 04:00:02', '', 1),
+(244, 61, '22', '2017-03-06 04:10:02', '', 1),
+(246, 61, '21', '2017-03-06 04:30:03', '', 1),
+(249, 61, '21', '2017-03-06 05:00:02', '', 1),
+(252, 61, '23', '2017-03-06 05:30:03', '', 1),
+(253, 61, '24', '2017-03-06 05:40:02', '', 1),
+(257, 61, '22', '2017-03-06 06:20:02', '', 1),
+(259, 61, '21', '2017-03-06 06:40:02', '', 1),
+(260, 61, '22', '2017-03-06 06:50:02', '', 1),
+(263, 61, '22', '2017-03-06 07:20:01', '', 1),
+(266, 61, '22', '2017-03-06 07:50:01', '', 1),
+(268, 61, '22', '2017-03-06 08:10:02', '', 1),
+(271, 61, '22', '2017-03-06 08:40:01', '', 1),
+(272, 61, '22', '2017-03-06 08:50:02', '', 1),
+(273, 61, '22', '2017-03-06 09:00:02', '', 1),
+(274, 61, '22', '2017-03-06 09:10:01', '', 1),
+(275, 61, '22', '2017-03-06 09:20:02', '', 1),
+(278, 61, '22', '2017-03-06 09:50:01', '', 1),
+(282, 61, '22', '2017-03-06 10:30:03', '', 1),
+(285, 61, '22', '2017-03-06 11:00:03', '', 1),
+(286, 61, '23', '2017-03-06 11:10:02', '', 1),
+(287, 61, '22', '2017-03-06 11:20:02', '', 1),
+(288, 61, '22', '2017-03-06 11:30:03', '', 1),
+(291, 61, '21', '2017-03-06 12:00:03', '', 1),
+(292, 61, '21', '2017-03-06 12:10:02', '', 1),
+(293, 61, '22', '2017-03-06 12:20:01', '', 1),
+(294, 61, '22', '2017-03-06 12:30:02', '', 1),
+(295, 61, '22', '2017-03-06 12:40:01', '', 1),
+(296, 61, '22', '2017-03-06 12:50:02', '', 1),
+(297, 61, '22', '2017-03-06 13:00:03', '', 1),
+(298, 61, '22', '2017-03-06 13:10:02', '', 1),
+(299, 61, '22', '2017-03-06 13:20:01', '', 1),
+(301, 61, '21', '2017-03-06 13:40:01', '', 1),
+(302, 61, '21', '2017-03-06 13:50:02', '', 1),
+(303, 61, '21', '2017-03-06 14:00:02', '', 1),
+(304, 61, '21', '2017-03-06 14:10:02', '', 1),
+(305, 61, '21', '2017-03-06 14:20:01', '', 1),
+(306, 61, '22', '2017-03-06 14:30:03', '', 1),
+(307, 61, '22', '2017-03-06 14:40:02', '', 1),
+(308, 61, '21', '2017-03-06 14:50:02', '', 1),
+(310, 61, '21', '2017-03-06 15:10:02', '', 1),
+(315, 61, '21', '2017-03-06 16:00:03', '', 1),
+(316, 61, '21', '2017-03-06 16:10:01', '', 1),
+(317, 61, '21', '2017-03-06 16:20:01', '', 1),
+(318, 61, '21', '2017-03-06 16:30:03', '', 1),
+(320, 61, '22', '2017-03-06 16:50:01', '', 1),
+(323, 61, '21', '2017-03-06 17:20:02', '', 1),
+(326, 61, '22', '2017-03-06 17:50:02', '', 1),
+(327, 61, '22', '2017-03-06 18:00:02', '', 1),
+(330, 61, '21', '2017-03-06 18:30:03', '', 1),
+(331, 61, '22', '2017-03-06 18:40:01', '', 1),
+(333, 61, '22', '2017-03-06 19:00:02', '', 1),
+(336, 61, '21', '2017-03-06 19:30:03', '', 1),
+(337, 61, '21', '2017-03-06 19:40:02', '', 1),
+(340, 61, '23', '2017-03-06 20:10:02', '', 1),
+(341, 61, '23', '2017-03-06 20:20:02', '', 1),
+(344, 61, '22', '2017-03-06 20:50:01', '', 1),
+(345, 61, '22', '2017-03-06 21:00:02', '', 1),
+(347, 61, '22', '2017-03-06 21:20:02', '', 1),
+(353, 61, '22', '2017-03-06 22:20:01', '', 1),
+(357, 61, '23', '2017-03-06 23:00:05', '', 1),
+(360, 61, '22', '2017-03-06 23:30:02', '', 1),
+(361, 61, '23', '2017-03-06 23:40:02', '', 1),
+(363, 61, '22', '2017-03-07 00:00:02', '', 1),
+(364, 61, '22', '2017-03-07 00:10:01', '', 1),
+(365, 61, '22', '2017-03-07 00:20:01', '', 1),
+(368, 61, '23', '2017-03-07 00:50:01', '', 1),
+(369, 61, '22', '2017-03-07 01:00:03', '', 1),
+(371, 61, '23', '2017-03-07 01:20:02', '', 1),
+(374, 61, '22', '2017-03-07 01:50:02', '', 1),
+(375, 61, '23', '2017-03-07 02:00:03', '', 1),
+(378, 61, '23', '2017-03-07 02:30:03', '', 1);
 
 -- --------------------------------------------------------
 
@@ -165,6 +472,7 @@ INSERT INTO `measurement` (`id`, `sensor_id`, `value`, `date_measured`, `message
 -- Table structure for table `sensor`
 --
 
+DROP TABLE IF EXISTS `sensor`;
 CREATE TABLE IF NOT EXISTS `sensor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -176,17 +484,15 @@ CREATE TABLE IF NOT EXISTS `sensor` (
   `value_fields` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `serial` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `sensor`
 --
 
-INSERT INTO `sensor` (`id`, `type`, `unit`, `name`, `com_id`, `system_id`, `date_created`, `value_fields`, `serial`) VALUES
-(16, '18', 'C', 'frontswitch', '192.168.2.22', 6, '2015-08-17 07:37:17', 'pin1,pin2', '10271918'),
-(55, '57', 'C', 'porch', '::1', 6, '2015-07-30 14:05:00', '', ''),
-(56, 'S', '%', 'My Sensor', '192.168.2.22', 6, '2015-08-31 16:00:00', '', ''),
-(58, 'S', '%', 'My Sensor 212', '192.168.2.221', 6, '2015-08-31 16:00:00', '', '');
+INSERT IGNORE INTO `sensor` (`id`, `type`, `unit`, `name`, `com_id`, `system_id`, `date_created`, `value_fields`, `serial`) VALUES
+(61, '1', 'C', '192-168-2-60', '192.168.2.60', 6, '2017-03-04 22:00:00', 'temperature', '10290203'),
+(62, '1', 'C', '192-168-2-22', '192.168.2.22', 6, '2017-03-04 14:33:00', 'pin1', '10271918');
 
 -- --------------------------------------------------------
 
@@ -194,18 +500,19 @@ INSERT INTO `sensor` (`id`, `type`, `unit`, `name`, `com_id`, `system_id`, `date
 -- Table structure for table `sensor_type`
 --
 
+DROP TABLE IF EXISTS `sensor_type`;
 CREATE TABLE IF NOT EXISTS `sensor_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=56 ;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `sensor_type`
 --
 
-INSERT INTO `sensor_type` (`id`, `value`, `type_name`) VALUES
+INSERT IGNORE INTO `sensor_type` (`id`, `value`, `type_name`) VALUES
 (1, 'TEMP', 'Temperature'),
 (2, 'HUM', 'Humidity'),
 (5, 'S', 'temperature'),
@@ -219,6 +526,7 @@ INSERT INTO `sensor_type` (`id`, `value`, `type_name`) VALUES
 -- Table structure for table `system`
 --
 
+DROP TABLE IF EXISTS `system`;
 CREATE TABLE IF NOT EXISTS `system` (
   `id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -227,13 +535,13 @@ CREATE TABLE IF NOT EXISTS `system` (
   `outer_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `prim_key` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`prim_key`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `system`
 --
 
-INSERT INTO `system` (`id`, `name`, `sensor_count`, `key`, `outer_key`, `prim_key`) VALUES
+INSERT IGNORE INTO `system` (`id`, `name`, `sensor_count`, `key`, `outer_key`, `prim_key`) VALUES
 ('1', 'Home', 2, '123456', '123456', 1),
 ('bojan123 - system', 'bojan123 - system', 0, '12345', '12345', 6);
 
@@ -243,6 +551,7 @@ INSERT INTO `system` (`id`, `name`, `sensor_count`, `key`, `outer_key`, `prim_ke
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -251,14 +560,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `name`) VALUES
-(16, 'bojan1@bojan.com', 'e0a35d8b43806377a1ee29d802270f94', 'bojan123');
+INSERT IGNORE INTO `user` (`id`, `username`, `password`, `name`) VALUES
+(16, 'druid0101@gmail.com', 'ea48576f30be1669971699c09ad05c94', 'bojan123');
 
 -- --------------------------------------------------------
 
@@ -266,19 +575,22 @@ INSERT INTO `user` (`id`, `username`, `password`, `name`) VALUES
 -- Table structure for table `user_system`
 --
 
+DROP TABLE IF EXISTS `user_system`;
 CREATE TABLE IF NOT EXISTS `user_system` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `system_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user_system`
 --
 
-INSERT INTO `user_system` (`id`, `user_id`, `system_id`) VALUES
+INSERT IGNORE INTO `user_system` (`id`, `user_id`, `system_id`) VALUES
 (1, 16, 6);
+SET FOREIGN_KEY_CHECKS=1;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

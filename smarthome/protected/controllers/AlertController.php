@@ -59,8 +59,12 @@ class AlertController extends Controller {
 
         if (isset($_POST['Alert'])) {
             $model->attributes = $_POST['Alert'];
-            if ($model->save(false))
+	    if(!isset($_POST['Alert']['notify'])){
+		$model->notify = null;
+	    }
+            if ($model->save(false)){
                 $this->redirect(array('view', 'id' => $model->id));
+	    }
         }
 
         $this->render('create', array(
@@ -75,11 +79,14 @@ class AlertController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
         if (isset($_POST['Alert'])) {
             $model->attributes = $_POST['Alert'];
-            if ($model->save(false))
+	    if(!isset($_POST['Alert']['notify'])){
+		$model->notify = null;
+	    }
+            if ($model->save(false)){
                 $this->redirect(array('view', 'id' => $model->id));
+	    }
         }
 
         $this->render('update', array(
