@@ -1,7 +1,6 @@
 <?php
 
 include 'funct.php';
-require 'class.simple_mail.php';
 
 $dsn = [
     'connectionString' => 'mysql:host=localhost;dbname=smarthome',
@@ -32,7 +31,11 @@ $countActivatedDevs = 0;
 $notifyBody = [];
 foreach ($sData as $oneModule) {
     $notifyAdmin = isset($oneModule['notify']);
-    $oneSensorData = runQuery($con, 'SELECT id, serial,com_id FROM sensor WHERE id=:tby;', [':tby' => $oneModule['triggered_by']], true);
+    $oneSensorData = runQuery($con, 
+	    'SELECT id, serial,com_id, system_id FROM sensor WHERE id=:tby ;', 
+	    [':tby' => $oneModule['triggered_by']], 
+	    true
+    );
     if (!isset($oneSensorData[0])) {
 	continue;
     }
@@ -53,7 +56,11 @@ foreach ($sData as $oneModule) {
 		else{
 		    if($notifyAdmin){
 			$countActivatedDevs++;
-			$notifyBody[] = $oneModule['action'].', actuator ' . $oneModule['actuator_id'] . " was set on ".date('d M Y h:i:s')." triggered by sensor ".$oneModule['triggered_by'];
+			$notifyBody[] = [
+			    'sys'=>$oneSensorData['system_id'],
+			    'msg'=>$oneModule['action'].', actuator ' . $oneModule['actuator_id'] . " was set on ".
+			    date('d M Y h:i:s')." triggered by sensor ".$oneModule['triggered_by']
+			];
 		    }
 		}
 		/**
@@ -82,3 +89,7 @@ foreach ($sData as $oneModule) {
 /**
  * send email per alert
  */
+$users = runQuery($con, 'SELECT * FROM user JOIN user_system ON user.id=user_system.user_id;', null, true);
+foreach($users as $oneUser){
+    
+}

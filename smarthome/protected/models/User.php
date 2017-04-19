@@ -8,6 +8,7 @@
  * @property string $username
  * @property string $password
  * @property string $name
+ * @property integer $notify
  */
 class User extends CActiveRecord
 {
@@ -27,11 +28,12 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, name', 'required'),
+			array('username, password, name, notify', 'required'),
+			array('notify', 'numerical', 'integerOnly'=>true),
 			array('username, password, name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, name', 'safe', 'on'=>'search'),
+			array('id, username, password, name, notify', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,6 +58,7 @@ class User extends CActiveRecord
 			'username' => 'Username',
 			'password' => 'Password',
 			'name' => 'Name',
+			'notify' => 'Notify',
 		);
 	}
 
@@ -81,6 +84,7 @@ class User extends CActiveRecord
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('name',$this->name,true);
+		$criteria->compare('notify',$this->notify);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -97,5 +101,4 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-        
 }

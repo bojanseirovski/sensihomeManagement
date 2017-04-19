@@ -40,19 +40,21 @@ function getSimpleRequest($requestString) {
     return $decoded;
 }
 
+require 'class.simple_mail.php';
 function sendEmail($settings, $recepient, $body, $title) {
-    $mail->isSMTP();				      // Set mailer to use SMTP
+    $mail = new PHPMailer();
+    $mail->isSMTP();	// Set mailer to use SMTP
     $mail->Host = $settings['host'];  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = $settings['smtpauth'];			       // Enable SMTP authentication
-    $mail->Username = $settings['user'];		 // SMTP username
-    $mail->Password = $settings['password'];			   // SMTP password
-    $mail->SMTPSecure = $settings['secure'];			    // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = $settings['port'];				    // TCP port to connect to
+    $mail->SMTPAuth = $settings['smtpauth'];  // Enable SMTP authentication
+    $mail->Username = $settings['user'];     // SMTP username
+    $mail->Password = $settings['password'];   // SMTP password
+    $mail->SMTPSecure = $settings['secure'];   // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = $settings['port'];	    // TCP port to connect to
 
     $mail->setFrom('info@sensistash.com', 'SensiStash');
-    $mail->addAddress($recepient['email'], $recepient['name']);     // Add a recipient
+    $mail->addAddress($recepient['email'], $recepient['name']);// Add a recipient
     $mail->addReplyTo('info@sensistash.com', 'SensiStash');
-    $mail->isHTML(true);				  // Set email format to HTML
+    $mail->isHTML(true);    // Set email format to HTML
 
     $mail->Subject = $title;
     $mail->Body = $body;
