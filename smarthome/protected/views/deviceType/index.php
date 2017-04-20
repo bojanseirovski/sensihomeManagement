@@ -14,6 +14,9 @@ $this->breadcrumbs=array(
 	</a>
     </li>
 </ul>
+<div>
+    <br/>
+</div>
 <h1>Device Types</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(

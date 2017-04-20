@@ -12,13 +12,14 @@ $baseUrl = Yii::app()->request->baseUrl;
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
+	'name',
 	'username',
 	array(
-	    'name' => 'password',
+	    'name' => 'notify',
+	    'label' => 'Receive alert notifications',
 	    'type' => 'raw',
-	    'value' => ''
+	    'value' => isset($model->notify)?'Yes':'No'
 	),
-	'name',
     ),
 ));
 ?>
