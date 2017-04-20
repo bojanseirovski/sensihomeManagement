@@ -91,5 +91,23 @@ foreach ($sData as $oneModule) {
  */
 $users = runQuery($con, 'SELECT * FROM user JOIN user_system ON user.id=user_system.user_id;', null, true);
 foreach($users as $oneUser){
-    
+    $userMailBody = '';
+    if(isset($oneUser['notify'])){
+	$sysId = $oneUser['system_id'];
+	$countUserData = 0;
+	foreach($notifyBody as $oneNotSec){
+	    if($oneNotSec['sys']==$sysId){
+		$countUserData++;
+		$userMailBody .='<div>'.$oneNotSec['msg'].'</div>' ;
+	    }
+	}
+	if($countUserData>0){
+	    $recepient = [
+		'email'=>$oneUser['username'],
+		'name'=>$oneUser['name'],
+	    ];
+	    //send mail 
+	    sendEmail($mailCreds, $recepient, $userMailBody, "SensiStash Notification");
+	}
+    }
 }
