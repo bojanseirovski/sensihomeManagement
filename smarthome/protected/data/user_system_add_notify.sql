@@ -1,0 +1,1 @@
+ALTER TABLE `user_system` ADD `notify` TINYINT(3) NULL ;

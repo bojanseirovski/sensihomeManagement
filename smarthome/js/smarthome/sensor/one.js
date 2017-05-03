@@ -86,6 +86,8 @@ $(document).ready(function () {
 			},
 			highlighter: {
 			    show: true,
+			    showTooltip : true,
+			    tooltipLocation :'n',
 			    sizeAdjust: 7.5
 			}
 		    });
