@@ -15,6 +15,7 @@ $(document).ready(function () {
 												theDataSensors = [];
 												theData = [];
 												var ticks = [];
+												var ticksLab = [];
 												if (data) {
 																var measured = data.data;
 																var cats = data.cats;
@@ -32,7 +33,7 @@ $(document).ready(function () {
 																				serial = v.serial;
 																				devIp = v.com_id;
 																				var yeardate = v.date_measured.split(' ');
-																				if (fraction >= nextFourth) {
+																				if ((fraction >= nextFourth) || (measured.length<4)) {
 																								var formatedDate = yeardate[0].split('-');
 																								var monthNum = parseInt(formatedDate[1]) - 1;
 																								ticks.push(formatedDate[0] + '-' + monthNamesShort[monthNum] + '-' + formatedDate[2]);
@@ -40,6 +41,7 @@ $(document).ready(function () {
 																				} else {
 																								ticks.push('');
 																				}
+																				ticksLab.push(v.date_measured);
 																});
 
 																$.each(measured, function (i, v) {
@@ -79,12 +81,20 @@ $(document).ready(function () {
 																												}
 																								},
 																								cursor: {
-																												show: true,
-																												tooltipLocation: 'ne'
+																												show: false,
 																								},
 																								highlighter: {
+																												tooltipContentEditor: function (str, seriesIndex, pointIndex) {
+																																return ticksLab[pointIndex];
+																												},
 																												show: true,
-																												sizeAdjust: 7.5
+																												showTooltip: true,
+																												tooltipFade: true,
+																												sizeAdjust: 1,
+																												formatString: '%.2f',
+																												tooltipLocation: 'ne',
+																												tooltipAxes:'x',
+																												useAxesFormatters: false,
 																								}
 																				});
 

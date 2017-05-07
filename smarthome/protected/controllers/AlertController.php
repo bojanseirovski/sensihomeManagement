@@ -121,6 +121,23 @@ class AlertController extends Controller {
         ));
     }
 
+    public function actionLog() {
+        $sid = Yii::app()->session['system_id'];
+        $qry = Yii::app()->request->getParam('query');
+        $qryClean = isset($qry) ? $qry : null;
+        $qry = isset($qry) ? $qry : null;
+
+        $criteria = new CDbCriteria();
+        if (isset($qry)) {
+            $criteria->addCondition("alname LIKE '%" . $qry . "%'");
+        }
+        $dataProvider = new CActiveDataProvider('AlertLog', array('criteria' => $criteria,));
+        $this->render('list_log', array(
+            'dataProvider' => $dataProvider,
+            'qry' => $qryClean,
+        ));
+    }
+
     /**
      * Lists all models.
      */

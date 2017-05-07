@@ -15,7 +15,7 @@ $baseUrl = Yii::app()->request->baseUrl;
     <br/>
 </div>
 <script type="text/javascript" src="<?= $baseUrl; ?>/js/smarthome/alert/list.js"></script>
-<h1>Rules</h1>
+<h1>Rules Log</h1>
 <div class="row">
     <div class="col-lg col-lg-3">
 	<input type="text" class="form-control" name="query" id="query" value="<?= $qry; ?>" placeholder="Search by name">
@@ -31,6 +31,6 @@ $baseUrl = Yii::app()->request->baseUrl;
 <?php
 $this->widget('zii.widgets.CListView', array(
     'dataProvider' => $dataProvider,
-    'itemView' => '_view',
+    'itemView' => '_view_log',
 ));
 ?>

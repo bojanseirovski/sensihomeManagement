@@ -50,8 +50,6 @@ $devState = $lastVal == "0" ? 'OFF' : 'ON';
 	<div><strong>History: </strong><a class="menu item link" href="<?= $this->createAbsoluteUrl('/search/index?a=' . $data->aid); ?>"><?= CHtml::encode($data->name); ?></a></div>
     </div>
 </div>
-<script type="text/javascript" src="<?= Yii::app()->request->baseUrl; ?>/js/jqplot/jquery.min.js"></script>
-<script type="text/javascript" src="<?= Yii::app()->request->baseUrl; ?>/js/jqplot/jquery.jqplot.min.js"></script>
 <script type="text/html" id="load_actuator_data_url"><?= $this->createAbsoluteUrl('actuator/actuator'); ?>?id=<?= CHtml::encode($id); ?>&ajax=1</script>
 <script type="text/html" id="dev_name"><?= CHtml::encode($data->name); ?></script>
 

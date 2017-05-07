@@ -23,22 +23,22 @@ $con = new \PDO($dsn['connectionString'], $dsn['username'], $dsn['password']);
  * Use PDO to read the DB and curl to talk to
  * the devices
  * alert table
- * 
+ *
  */
-$sData = runQuery($con, 'SELECT * FROM alert;', null, true);
+$sData = runQuery($con, 'SELECT * FROM alert WHERE enabled=1;', null, true);
 
 $countActivatedDevs = 0;
 $notifyBody = [];
 foreach ($sData as $oneModule) {
     $notifyAdmin = isset($oneModule['notify']);
-    $oneSensoqQry ="SELECT id, serial,com_id, system_id FROM sensor WHERE id=:tby LIMIT 1;";
+    $oneSensoqQry ="SELECT * FROM sensor WHERE id=:tby LIMIT 1;";
     $oneSensoqParams = [':tby' => $oneModule['triggered_by']];
     $oneSensorData = runQuery($con, $oneSensoqQry, $oneSensoqParams, true )[0];
     //  get actuator
-    $oneActQry ="SELECT aid, serial,com_id, system_id FROM actuator WHERE aid=:aid LIMIT 1;";
+    $oneActQry ="SELECT * FROM actuator WHERE aid=:aid LIMIT 1;";
     $oneActParams = [':aid' => $oneModule['actuator_id']];
     $oneActData = runQuery($con, $oneActQry, $oneActParams, true )[0];
-    var_export($oneActData);
+
     if (!isset($oneSensorData)) {
         continue;
     }
@@ -49,23 +49,24 @@ foreach ($sData as $oneModule) {
     $valField = isset($measure['value_fields'])?$measure['value_fields']:null;
     $measuredValue = isset($measure[$valField])?$measure[$valField]:null;
     if (isset($measure) && isset($measure['status']) && ($measure['status'] == 'OK')) {
+
         if (isset($oneModule['trigger_value']) && ($measuredValue>$oneModule['trigger_value'])) {
             try {
                 // load actuator values
                 $requestEndPoint = 'http://' . $oneActData['com_id'] . '/id/' . $oneActData['serial'] . '/reqtype/json/pin/'.$oneModule['actuator_state'];
                 $fireAlert = getSimpleRequest($requestEndPoint);
-                var_export($requestEndPoint);
-                var_export($fireAlert);
                 if ($fireAlert['status'] != 'OK') {
                     error_log('Actuator ID ' . $oneModule['actuator_id'] . " wasn't set.");
                 } 
                 else {
                     if ($notifyAdmin) {
                         $countActivatedDevs++;
+                        $theMessage = $oneModule['action'] . ', actuator ' . $oneActData['name'] . " was set on " .
+                            date('d M Y h:i:s') . " triggered by sensor " . $oneSensorData['name'].
+                            ", ".$valField.": ".$measuredValue." ".$oneSensorData['unit'];
                         $notifyBody[] = [
                             'sys' => $oneSensorData['system_id'],
-                            'msg' => $oneModule['action'] . ', actuator ' . $oneModule['actuator_id'] . " was set on " .
-                            date('d M Y h:i:s') . " triggered by sensor " . $oneModule['triggered_by']
+                            'msg' => $theMessage
                         ];
                     }
                     /**
@@ -85,7 +86,7 @@ foreach ($sData as $oneModule) {
                     runQuery($con, $alertLogQry, $alertLogData);
                 }
             } catch (Exception $e) {
-                error_log($e->getMessage());
+               error_log($e->getMessage());
             }
         }
     }

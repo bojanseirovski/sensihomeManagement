@@ -23,7 +23,7 @@ $urlType = $isSensor ? "sensor" : "actuator";
     </div>
 
     <div class="col-md col-md-2">
-	<?= CHtml::encode(date('Y M d', strtotime($data->date_measured))); ?>
+	<?= CHtml::encode(date('d M Y h:i', strtotime($data->date_measured))); ?>
     </div>
 
     <div class="col-md col-md-2">

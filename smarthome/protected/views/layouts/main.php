@@ -24,11 +24,11 @@ $baseUrl = Yii::app()->request->baseUrl;
         <script type="text/javascript" src="<?= $baseUrl; ?>/js/smarthome/general.js"></script>
 
 	<script type="text/javascript" src="<?= $baseUrl; ?>/js/jqplot/plugins/jqplot.barRenderer.js"></script>
-	<script type="text/javascript" src="<?= $baseUrl; ?>/js/jqplot/plugins/jqplot.categoryAxisRenderer.js"></script>
-	<script type="text/javascript" src="<?= $baseUrl; ?>/js/jqplot/plugins/jqplot.pointLabels.js"></script>
 	<script type="text/javascript" src="<?= $baseUrl; ?>/js/jqplot/plugins/jqplot.highlighter.js"></script>
 	<script type="text/javascript" src="<?= $baseUrl; ?>/js/jqplot/plugins/jqplot.cursor.js"></script>
 	<script type="text/javascript" src="<?= $baseUrl; ?>/js/jqplot/plugins/jqplot.dateAxisRenderer.js"></script>
+	<script type="text/javascript" src="<?= $baseUrl; ?>/js/jqplot/plugins/jqplot.categoryAxisRenderer.js"></script>
+	<script type="text/javascript" src="<?= $baseUrl; ?>/js/jqplot/plugins/jqplot.pointLabels.js"></script>
 
 
         <script type="text/html" id="base_url"><?= Yii::app()->urlManager->baseUrl; ?></script>
