@@ -37,6 +37,11 @@ $this->widget('zii.widgets.CDetailView', [
 	    'type' => 'raw',
 	    'value' => date('M d Y', strtotime($model->scheduled_on)),
 	],
+	'is_daily'=>[
+	    'label' => 'Executes Daily',
+	    'type' => 'raw',
+	    'value' => isset($model->is_daily)?"Yes":"No",
+	],
 	'triggered_by' => [
 	    'label' => 'Triggered by',
 	    'type' => 'raw',

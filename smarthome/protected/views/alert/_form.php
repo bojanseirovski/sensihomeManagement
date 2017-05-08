@@ -30,6 +30,13 @@
     </div>
 
     <div class="row">
+        <?= $form->labelEx($model, 'is_daily'); ?>
+        <?php //= $form->textField($model, 'is_daily', ['class' => 'form-control']); ?>
+	<?= CHtml::checkBox('Alert[is_daily]', $model->is_daily); ?>
+        <?= $form->error($model, 'is_daily'); ?>
+    </div>
+
+    <div class="row">
         <?= $form->labelEx($model, 'triggered_by'); ?>
         <?php $sModel = new Sensor(); ?>
         <?= CHtml::dropDownList('Alert[triggered_by]', $model->triggered_by, $sModel->getSensorNameId(), ['class' => 'form-control']); ?>

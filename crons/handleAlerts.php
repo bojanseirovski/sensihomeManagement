@@ -29,7 +29,11 @@ $sData = runQuery($con, 'SELECT * FROM alert WHERE enabled=1;', null, true);
 
 $countActivatedDevs = 0;
 $notifyBody = [];
+$today = strtotime(date('Y-m-d'));
 foreach ($sData as $oneModule) {
+    if(!isset($oneModule['is_daily']) && (strtotime($oneModule['scheduled_on'])!=$today)){
+	continue;
+    }
     $notifyAdmin = isset($oneModule['notify']);
     $oneSensoqQry ="SELECT * FROM sensor WHERE id=:tby LIMIT 1;";
     $oneSensoqParams = [':tby' => $oneModule['triggered_by']];

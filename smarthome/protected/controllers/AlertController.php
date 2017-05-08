@@ -62,6 +62,9 @@ class AlertController extends Controller {
 	    if(!isset($_POST['Alert']['notify'])){
 		$model->notify = null;
 	    }
+	    if(!isset($_POST['Alert']['is_daily'])){
+		$model->is_daily = null;
+	    }
             if ($model->save(false)){
                 $this->redirect(array('view', 'id' => $model->id));
 	    }
@@ -83,6 +86,9 @@ class AlertController extends Controller {
             $model->attributes = $_POST['Alert'];
 	    if(!isset($_POST['Alert']['notify'])){
 		$model->notify = null;
+	    }
+	    if(!isset($_POST['Alert']['is_daily'])){
+		$model->is_daily = null;
 	    }
             if ($model->save(false)){
                 $this->redirect(array('view', 'id' => $model->id));
