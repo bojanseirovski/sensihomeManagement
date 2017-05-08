@@ -282,11 +282,11 @@ ul.option-per-device li a:hover {
 }
 
 .device_info{
-    position: absolute;
-    float: right;
-    left:70%;
+    /*position: absolute;*/
+    /*float: right;*/
+    /*left:70%;*/
     margin: 20px;
-    padding-top: 100px;
+    padding-top: 20px;
 }
 .device_info div{
     margin-top: 20px;

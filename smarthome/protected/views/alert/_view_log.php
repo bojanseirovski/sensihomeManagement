@@ -23,9 +23,6 @@ $sname = $this->getSensorNameAndId($data->sid)['name'];
         <li>
             <a href="<?= $this->createAbsoluteUrl('/alert/update/' . $data->alid) ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
         </li>
-        <li>
-            <a href="javascript:void(0);" class="del-item" data-id="<?= $data->id; ?>" data-type="alert"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>
-        </li>
     </ul>
 
     <div>
@@ -34,22 +31,17 @@ $sname = $this->getSensorNameAndId($data->sid)['name'];
     </div>
 
     <div>
-        <strong><?= CHtml::encode($data->getAttributeLabel('scheduled_on')); ?>:</strong>
-        <?= date('M d Y', strtotime($data->date)); ?>
-    </div>
-
-    <div>
-        <strong><?= CHtml::encode($data->getAttributeLabel('aid')); ?>:</strong>
+        <strong>Actuator:</strong>
         <?= CHtml::link($aname, ['/actuator/one', 'id' => $data->aid]) ?>
     </div>
 
     <div>
-        <strong><?= CHtml::encode($data->getAttributeLabel('sid')); ?>:</strong>
+        <strong>Triggered by:</strong>
         <?= CHtml::link($sname, ['/sensor/one', 'id' => $data->sid]) ?>
     </div>
 
     <div>
-        <strong><?= CHtml::encode($data->getAttributeLabel('astate')); ?>:</strong>
+        <strong>Actuator state:</strong>
         <?= CHtml::encode($data->astate); ?>
     </div>
 

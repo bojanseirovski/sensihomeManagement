@@ -124,12 +124,20 @@ class AlertController extends Controller {
     public function actionLog() {
         $sid = Yii::app()->session['system_id'];
         $qry = Yii::app()->request->getParam('query');
+        $rid = Yii::app()->request->getParam('rid');
+        
         $qryClean = isset($qry) ? $qry : null;
         $qry = isset($qry) ? $qry : null;
+        
+        $ridClean = isset($rid) ? $rid : null;
+        $rid = isset($rid) ? $rid : null;
 
         $criteria = new CDbCriteria();
         if (isset($qry)) {
             $criteria->addCondition("alname LIKE '%" . $qry . "%'");
+        }
+        if (isset($rid)) {
+            $criteria->addCondition("alid=" . $rid);
         }
         $dataProvider = new CActiveDataProvider('AlertLog', array('criteria' => $criteria,));
         $this->render('list_log', array(

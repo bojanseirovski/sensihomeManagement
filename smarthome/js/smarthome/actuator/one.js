@@ -51,8 +51,8 @@ $(document).ready(function () {
 																var c_color = '#0073A4';
 																var divId = 'chartact';
 																if (theDataSensors != 'undefined' && theDataSensors != undefined) {
-																				$('#content').append($('<div>').attr('id', divId + 'info').attr('style', 'width:600px; height:30px;'))
-																				$('#content').append($('<div>').attr('id', divId).attr('style', 'width:600px; height:400px;'))
+																				$('#thechart').append($('<div>').attr('id', divId + 'info').attr('style', 'width:600px; height:30px;'))
+																				$('#thechart').append($('<div>').attr('id', divId).attr('style', 'width:600px; height:400px;'))
 
 																				var plot1 = $.jqplot(divId, [theData], {
 																								title: $('#dev_name').text(),

@@ -26,6 +26,7 @@
         <br/>
     </div>
     <h2 id="this_page_title"></h2>
+    <div id="thechart"></div>
     <div class="device_info">
         <div><strong>Name : </strong><?= CHtml::encode($data->name); ?></div>
         <div><strong>IP address : </strong><?= CHtml::encode($data->com_id); ?></div>

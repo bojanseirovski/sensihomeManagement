@@ -10,3 +10,5 @@ CREATE TABLE `smarthome`.`alert_log` (
     PRIMARY KEY (`id`)
 )
 ENGINE = MyISAM CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+ALTER TABLE `alert_log` CHANGE `date` `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
