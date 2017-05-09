@@ -11,8 +11,8 @@ $dsn = [
 ];
 $mailCreds = [
     'host' => 'smtp.gmail.com',
-    'user' => 'click2promote@gmail.com',
-    'password' => 'Click@Promote',
+    'user' => 'mail@gmail.com',
+    'password' => '',
     'secure' => 'ssl',
     'port' => 465,
     'smtpauth' => true,
@@ -31,7 +31,7 @@ $countActivatedDevs = 0;
 $notifyBody = [];
 $today = strtotime(date('Y-m-d'));
 foreach ($sData as $oneModule) {
-    if(!isset($oneModule['is_daily']) && (strtotime($oneModule['scheduled_on'])!=$today)){
+    if(!isset($oneModule['is_daily']) || (strtotime($oneModule['scheduled_on'])!=$today)){
 	continue;
     }
     $notifyAdmin = isset($oneModule['notify']);
