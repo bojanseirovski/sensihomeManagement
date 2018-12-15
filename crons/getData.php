@@ -4,7 +4,7 @@ $dsn	=	array(
 				'connectionString'	=>	'mysql:host=localhost;dbname=smarthome',
 				'emulatePrepare'	=>	true,
 				'username'	=>	'root',
-				'password'	=>	'rim%@!641',
+				'password'	=>	'***************',
 				'charset'	=>	'utf8',
 );
 
