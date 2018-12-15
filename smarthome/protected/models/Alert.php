@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $action
  * @property string $scheduled_on
+ * @property integer $is_daily
  * @property integer $triggered_by
  * @property string $trigger_value
  * @property integer $enabled
@@ -34,11 +35,11 @@ class Alert extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('action, scheduled_on, triggered_by, trigger_value, enabled, date_created', 'required'),
-			array('triggered_by, enabled, actuator_id, notify', 'numerical', 'integerOnly'=>true),
+			array('is_daily, triggered_by, enabled, actuator_id, notify', 'numerical', 'integerOnly'=>true),
 			array('action, trigger_value, actuator_state', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, action, scheduled_on, triggered_by, trigger_value, enabled, date_created, actuator_id, actuator_state, notify', 'safe', 'on'=>'search'),
+			array('id, action, scheduled_on, is_daily, triggered_by, trigger_value, enabled, date_created, actuator_id, actuator_state, notify', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +63,7 @@ class Alert extends CActiveRecord
 			'id' => 'ID',
 			'action' => 'Action',
 			'scheduled_on' => 'Scheduled On',
+			'is_daily' => 'Is Daily',
 			'triggered_by' => 'Triggered By',
 			'trigger_value' => 'Trigger Value',
 			'enabled' => 'Enabled',
@@ -93,6 +95,7 @@ class Alert extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('action',$this->action,true);
 		$criteria->compare('scheduled_on',$this->scheduled_on,true);
+		$criteria->compare('is_daily',$this->is_daily);
 		$criteria->compare('triggered_by',$this->triggered_by);
 		$criteria->compare('trigger_value',$this->trigger_value,true);
 		$criteria->compare('enabled',$this->enabled);

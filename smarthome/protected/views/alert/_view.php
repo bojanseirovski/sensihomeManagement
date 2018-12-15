@@ -42,6 +42,11 @@ $sname = $this->getSensorNameAndId($data->triggered_by)['name'];
     </div>
 
     <div>
+        <strong>Executes Daily:</strong>
+        <?= isset($data->is_daily)?"Yes":"No"; ?>
+    </div>
+
+    <div>
         <strong><?= CHtml::encode($data->getAttributeLabel('actuator_id')); ?>:</strong>
         <?= CHtml::link($aname, ['/actuator/one', 'id' => $data->actuator_id]) ?>
     </div>
